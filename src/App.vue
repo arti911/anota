@@ -7,41 +7,34 @@
         <span></span>
         <span></span>
       </div>
-      <!-- <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-      </div> -->
     </header>
     <main class="main">
       <router-view/>
     </main>
-    <Modal v-if="modal.modalShow" />
+    <WrapperModal v-if="wrapperModal.isShow" />
     <button class="add-note" @click="show"></button>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import Modal from '@/components/Modal.vue'
+import WrapperModal from '@/components/WrapperModal.vue'
 
 export default {
   components: {
-    Modal
-  },
-  data: () => {
-    return {}
+    WrapperModal
   },
   computed: {
     ...mapState(
-      ['modal']
+      ['wrapperModal']
     )
   },
   methods: {
     ...mapMutations([
-      'showModal'
+      'showWrap'
     ]),
     show () {
-      this.showModal()
+      this.showWrap(true)
     }
   }
 }
