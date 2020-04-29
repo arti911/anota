@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="note" v-for="note in notes" :key="note.id">
+    <div class="note" v-for="note in notes.lists" :key="note.id" @click="editNote(note)">
       <h3 class="note__title" v-if="note.title">{{ note.title }}</h3>
       <div class="note__tasks">
         <div class="note__task" v-for="task in note.tasks" :key="task.id">
@@ -21,6 +21,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapState([
+      'note',
       'notes'
     ])
   },
@@ -28,6 +29,10 @@ export default {
     ...mapMutations([
       'showModal'
     ]),
+    editNote (el) {
+      this.note.el = el
+      this.show()
+    },
     show () {
       this.showModal()
     }
@@ -53,7 +58,12 @@ $note: note;
   background-color: #b5f4fa;
   border-radius: 6px;
 
-&__tasks {
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__tasks {
     display: grid;
     grid-template-columns: 1fr;
     gap: 15px;

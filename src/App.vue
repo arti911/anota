@@ -15,13 +15,13 @@
     <main class="main">
       <router-view/>
     </main>
-    <Modal />
+    <Modal v-if="modal.modalShow" />
     <button class="add-note" @click="show"></button>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import Modal from '@/components/Modal.vue'
 
 export default {
@@ -30,6 +30,11 @@ export default {
   },
   data: () => {
     return {}
+  },
+  computed: {
+    ...mapState(
+      ['modal']
+    )
   },
   methods: {
     ...mapMutations([

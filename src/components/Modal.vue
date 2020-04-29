@@ -1,38 +1,38 @@
 <template>
-  <div class="modal" v-if="modalShow">
-    <div class="modal__wrapper" @click="modalHide"></div>
+  <div class="modal">
+    <div class="modal__wrapper" @click="closeModal"></div>
     <div class="modal__wrap">
-      <!-- {{tasks}} -->
+      {{note.el.tasks}}
       <div class="modal__window">
         <label for="" class="modal__title">
-          <input type="text" placeholder="Title" v-model="title" v-focus>
+          <input type="text" placeholder="Title" v-model="note.el.title" v-focus>
         </label>
         <div class="modal__tasks">
           <CreateTask
-            v-for="task in tasks"
-            :class="!newTask && !task.edit ? 'task--not-click' : ''"
+            v-for="task in note.el.tasks"
+            :class="!note.newTask && !task.edit ? 'task--not-click' : ''"
             :key="task.id"
             :task="task"
             v-model="task.done"
-            @save-task="saveTask"
-            @cancel-task="cancelTask"
-            @edit-task="editTask"
-            @remove-task="removeTask"
+            @save-task="save"
+            @edit-task="edit"
+            @cancel-task="cancel"
+            @remove-task="remove"
           />
         </div>
-        <button @click="addTask" v-if="newTask">+ Task</button>
+        <button @click="add" v-if="note.newTask">+ Task</button>
       </div>
       <div class="modal__btns">
         <button class="modal__btn modal__btn--delete"></button>
-        <button class="modal__btn modal__btn--save" @click="saveNote" v-if="title && tasks.length && newTask"></button>
-        <button class="modal__btn modal__btn--cancel" @click="modalHide"></button>
+        <button class="modal__btn modal__btn--save" @click="saveNote" v-if="saveNoteDisabeled"></button>
+        <button class="modal__btn modal__btn--cancel" @click="closeModal"></button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations, mapState, mapGetters } from 'vuex'
 import autoFocus from '@/directives/autofocus'
 import CreateTask from '@/components/CreateTask.vue'
 
@@ -46,87 +46,78 @@ export default {
   },
   data: () => {
     return {
-      newTask: true,
-      title: '',
-      tasks: [],
-      count: 0
+      id: 1
     }
   },
   computed: {
-    ...mapState(
-      ['modalShow']
-    )
+    ...mapState([
+      'note',
+      'notes'
+    ]),
+    ...mapGetters([
+      'saveNoteDisabeled'
+    ])
   },
   methods: {
     ...mapMutations([
+      'addTask',
+      'saveTask',
+      'editTask',
+      'cancelTask',
+      'removeTask',
       'addNote',
+      'increment',
       'hideModal'
     ]),
-    addTask () {
-      this.tasks.push({
-        id: this.count,
-        title: '',
-        done: false,
-        edit: true
-      })
-      this.count += 1
-      this.newTask = false
+    add () {
+      this.addTask()
     },
-    saveTask (arg) {
-      const [id, title, edit] = arg
-
-      if (title !== '') {
-        this.tasks.map(task => {
-          if (task.id === id) {
-            task.title = title
-            task.edit = edit
-          }
-        })
-
-        this.newTask = true
-      }
+    save (arg) {
+      this.saveTask(arg)
     },
-    editTask (id) {
-      this.newTask = false
-
-      this.tasks.map(task => {
-        if (task.id === id) {
-          task.edit = true
-        }
-      })
+    edit (id) {
+      this.editTask(id)
     },
-    cancelTask (arg) {
-      const [id, title] = arg
-
-      if (title === '') {
-        this.tasks = this.tasks.filter(task => task.id !== id)
-      } else {
-        this.tasks.map(task => {
-          if (task.id === id) {
-            task.edit = false
-          }
-        })
-      }
-
-      this.newTask = true
+    cancel (arg) {
+      this.cancelTask(arg)
     },
-    removeTask (id) {
-      this.tasks = this.tasks.filter(task => task.id !== id)
+    remove (id) {
+      this.removeTask(id)
     },
     saveNote () {
-      const note = {
-        id: Date.now(),
-        title: this.title,
-        tasks: this.tasks
+      const notes = this.notes.lists
+      let note = this.note.el
+      const id = this.note.id
+
+      const found = notes.find(item => item.id === note.id)
+
+      if (found) {
+        note = {
+          ...{
+            title: this.note.el.title,
+            tasks: this.note.el.tasks
+          }
+        }
+      } else {
+        const newNote = {
+          id: id,
+          title: this.note.el.title,
+          tasks: this.note.el.tasks
+        }
+        this.increment()
+        this.addNote(newNote)
       }
-      this.addNote(note)
-      this.modalHide()
+
+      this.closeModal()
     },
-    modalHide () {
-      this.newTask = true
-      this.title = ''
-      this.tasks = []
-      this.count = 0
+    closeModal () {
+      this.note.el = {
+        id: null,
+        title: '',
+        tasks: []
+      }
+      this.note.newTask = true
+      this.note.count = 0
       this.hideModal()
     }
   }
@@ -135,6 +126,7 @@ export default {
 
 <style lang='scss'>
 $modal: modal;
+
 .#{$modal} {
   position: fixed;
   top: 0;
