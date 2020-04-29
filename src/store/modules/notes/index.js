@@ -1,5 +1,6 @@
 export default {
   state: {
+    activeNote: null,
     lists: [
       {
         id: 0,
@@ -35,14 +36,43 @@ export default {
             edit: false,
             done: true
           }
-        ]
+        ],
+        isOpenMenu: false
+      },
+      {
+        id: 1,
+        title: 'Numbers',
+        tasks: [
+          {
+            id: 0,
+            title: '1',
+            edit: false,
+            done: false
+          }
+        ],
+        isOpenMenu: false
       }
     ]
   },
   mutations: {
-    addNote: (state, note) => {
-      console.log(note)
-      state.lists.push(note)
+    openMenu: (state, id) => {
+      state.activeNote = id
+
+      state.lists.map(item => {
+        if (item.id === id) {
+          item.isOpenMenu = true
+        }
+      })
+    },
+    closeMenu: (state, id) => {
+      state.lists.map(item => {
+        if (item.id === id) {
+          item.isOpenMenu = false
+        }
+      })
+    },
+    removeNote: (state, id) => {
+      state.lists = state.lists.filter(item => item.id !== id)
     }
   }
 }

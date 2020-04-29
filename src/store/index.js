@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import notes from './modules/notes'
-import note from './modules/note'
-import modal from './modules/modal'
+import modals from './modules/modals'
+import wrapperModal from './modules/wrapper_modal'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     notes,
-    note,
-    modal
+    modals,
+    wrapperModal
   }
 })
