@@ -28,11 +28,16 @@ export default {
     ...mapMutations([
       'hideWrap',
       'hideModalDelete',
+      'hideModalNote',
       'removeColorWrap'
     ]),
     hide () {
-      if (this.modals.isModalDelete || this.modals.isModalNote) {
+      if (this.modals.isModalNote) {
+        this.hideModalNote()
+        this.hideWrap()
+      } else if (this.modals.isModalDelete) {
         this.hideModalDelete()
+
         this.removeColorWrap()
         this.notes.lists.map(item => {
           if (item.id === this.notes.activeNote) {
@@ -65,6 +70,7 @@ $wrapper-modal: wrapper-modal;
   bottom: 0;
   z-index: 101;
   display: grid;
+  grid-template-columns: minmax(320px, 500px);
   align-items: center;
   justify-content: center;
   transition: background-color .2s ease;

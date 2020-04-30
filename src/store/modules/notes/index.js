@@ -5,7 +5,7 @@ export default {
       {
         id: 0,
         title: 'Name',
-        tasks: [
+        todos: [
           {
             id: 0,
             title: 'Study for test',
@@ -42,7 +42,7 @@ export default {
       {
         id: 1,
         title: 'Numbers',
-        tasks: [
+        todos: [
           {
             id: 0,
             title: '1',
@@ -70,6 +70,9 @@ export default {
           item.isOpenMenu = false
         }
       })
+    },
+    addNote: (state, note) => {
+      state.lists.push(note)
     },
     removeNote: (state, id) => {
       state.lists = state.lists.filter(item => item.id !== id)

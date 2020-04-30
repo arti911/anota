@@ -31,10 +31,12 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'showWrap'
+      'showWrap',
+      'showModalNote'
     ]),
     show () {
       this.showWrap(true)
+      this.showModalNote()
     }
   }
 }

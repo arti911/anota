@@ -13,7 +13,7 @@
       </div>
     </header>
     <div class="note__lists">
-      <div class="note__lists-item" v-for="task in noteEl.tasks" :key="task.id">
+      <div class="note__lists-item" v-for="task in noteEl.todos" :key="task.id">
         <label class="check">
             <input class="check__input" type="checkbox" :checked="task.done">
             <span class="check__box"></span>

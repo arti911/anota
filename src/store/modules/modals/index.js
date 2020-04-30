@@ -9,6 +9,12 @@ export default {
     },
     hideModalDelete: state => {
       state.isModalDelete = false
+    },
+    showModalNote: state => {
+      state.isModalNote = true
+    },
+    hideModalNote: state => {
+      state.isModalNote = false
     }
   }
 }

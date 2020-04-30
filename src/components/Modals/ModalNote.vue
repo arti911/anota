@@ -1,33 +1,33 @@
 <template>
   <div class="modal">
     <label for="" class="modal__title">
-      <input type="text" placeholder="Title" v-model="note.el.title" v-focus>
+      <input type="text" placeholder="Title" v-model.trim="newNote.title" v-focus>
     </label>
-    <div class="modal__tasks">
-      <CreateTask
-        v-for="task in note.el.tasks"
-        :class="!note.newTask && !task.edit ? 'task--not-click' : ''"
-        :key="task.id"
-        :task="task"
-        v-model="task.done"
-        @save-task="save"
-        @edit-task="edit"
-        @cancel-task="cancel"
-        @remove-task="remove"
+    <div class="modal__todo">
+      <!-- {{ newNote.todos }} -->
+      <Todo
+        v-for="(todo, index) in newNote.todos"
+        :key="todo.id"
+        :todo="todo"
+        v-model="todo.title"
+        @save-todo="saveTodo(index, todo)"
+        @cancel-todo="cancelTodo(todo.id)"
+        @remove-todo="removeTodo(todo.id)"
+        @done-todo="doneTodo(index, todo)"
       />
     </div>
-    <button @click="add" v-if="note.newTask">+ Task</button>
+    <button class="modal__add" @click="addTodo" v-if="isShowAdd">+ Add Todo</button>
     <div class="modal__btns">
-      <!-- <button class="modal__btn modal__btn--delete"></button> -->
-      <button class="modal__btn modal__btn--save" @click="saveNote" v-if="saveNoteDisabeled"></button>
-      <button class="modal__btn modal__btn--cancel" @click="closeModal"></button>
+      <button class="modal__btn modal__btn--save" @click="pushNote(newNote)" v-if="saveNote"></button>
+      <button class="modal__btn modal__btn--cancel" @click="cancelNote"></button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import autoFocus from '@/directives/autofocus'
-import CreateTask from '@/components/CreateTask.vue'
+import Todo from '@/components/Todo.vue'
 
 export default {
   name: 'ModalNote',
@@ -35,7 +35,81 @@ export default {
     focus: autoFocus
   },
   components: {
-    CreateTask
+    Todo
+  },
+  data: () => {
+    return {
+      isShowAdd: true,
+      newNote: {
+        id: Date.now(),
+        title: '',
+        todos: [],
+        isOpenMenu: false
+      },
+      newTodo: {
+        id: Date.now(),
+        title: '',
+        edit: true,
+        done: false
+      }
+    }
+  },
+  computed: {
+    saveNote () {
+      return this.newNote.title !== '' && this.newNote.todos.length && this.isShowAdd
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'addNote',
+      'hideModalNote',
+      'hideWrap',
+      'removeColorWrap'
+    ]),
+    addTodo () {
+      this.newTodo.title = ''
+      this.newNote.todos.push(this.newTodo)
+      this.isShowAdd = false
+    },
+    saveTodo (index, todo) {
+      todo = {
+        ...todo,
+        id: Date.now(),
+        edit: false
+      }
+
+      this.newNote.todos.splice(index, 1, todo)
+      this.isShowAdd = true
+    },
+    cancelTodo (id) {
+      this.newNote.todos = this.newNote.todos.filter(item => item.id !== id)
+      this.isShowAdd = true
+    },
+    removeTodo (id) {
+      this.newNote.todos = this.newNote.todos.filter(item => item.id !== id)
+    },
+    doneTodo (index, todo) {
+      todo = todo.done ? {
+        ...todo,
+        done: false
+      } : {
+        ...todo,
+        done: true
+      }
+
+      this.newNote.todos.splice(index, 1, todo)
+    },
+    pushNote (note) {
+      this.addNote(note)
+      this.hideWrap()
+      this.removeColorWrap()
+      this.hideModalNote()
+    },
+    cancelNote () {
+      this.hideWrap()
+      this.removeColorWrap()
+      this.hideModalNote()
+    }
   }
 }
 </script>

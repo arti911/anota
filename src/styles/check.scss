@@ -1,8 +1,64 @@
 .check {
+  position: relative;
   display: grid;
   grid-template-columns: 20px 1fr;
   gap: 10px;
   align-items: stretch;
+
+  &__name {
+    border-bottom: 1px solid red;
+  }
+
+  &__wrap {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    flex-grow: 1;
+  }
+
+  &__burger {
+    display: flex;
+    cursor: pointer;
+
+    span {
+      display: block;
+      width: 5px;
+      height: 5px;
+      margin: 0 2.5px;
+      background-color: #0f2431;
+      border-radius: 50%;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #0f2431;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 105;
+  }
+
+  &__menu-item {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+
+    &--edit {
+      color: rgb(23, 191, 99);
+    }
+
+    &--remove {
+      color: rgb(224, 36, 94);
+    }
+  }
 
   &__input {
     position: absolute;
