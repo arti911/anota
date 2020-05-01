@@ -1,21 +1,24 @@
 <template>
   <div class="todo">
     <div class="todo__wrap" v-if="cuurentTodo" @click="cancleEditTodo(todo)"></div>
-    <label class="check">
-      <input class="check__input" type="checkbox" @change="$emit('done-todo', $event.target.value)">
-      <span class="check__box"></span>
+
+    <div class="check">
+      <label>
+        <input class="check__input" type="checkbox" @change="$emit('done-todo', $event.target.value)" :checked="todo.done">
+        <span class="check__box"></span>
+        <div class="check__title" v-if="!todo.edit">
+          {{ todo.title }}
+        </div>
+      </label>
       <input
         type="text"
         :value="value"
         @input="$emit('input', $event.target.value)"
-        class="check__name"
+        class="check__value"
         v-focus
         v-if="todo.edit"
       >
-      <div class="check__wrap" v-else>
-        <div class="check__title">
-          {{ todo.title }}
-        </div>
+      <div class="check__actions" v-else>
         <button class="check__burger" @click="cuurentTodo = todo.id">
           <span></span>
           <span></span>
@@ -29,7 +32,8 @@
           >Remove</button>
         </div>
       </div>
-    </label>
+    </div>
+
     <div class="todo__btns" v-if="todo.edit">
       <button
         class="todo__btn todo__btn--save"
@@ -56,19 +60,22 @@ export default {
   data: () => {
     return {
       cuurentTodo: null,
-      oldValue: ''
+      oldValue: '',
+      done: null
     }
   },
   computed: {},
   methods: {
     editTodo (todo) {
       this.oldValue = todo.title
+      this.done = todo.done
       todo.edit = true
       this.cuurentTodo = true
     },
     cancleEditTodo (todo) {
       if (todo.edit) {
         todo.title = this.oldValue
+        todo.done = this.done
         todo.edit = false
       }
 

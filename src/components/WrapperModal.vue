@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper-modal" :class="wrapperModal.color ? 'wrapper-modal--color' : ''">
     <div class="wrapper-modal__wrap" @click="hide"></div>
+    <div class="wrapper-modal__double-wrap" v-if="modals.isModalDeleteNote" @click="hModalDeleteNote">
+      <ModalDeleteConfirm />
+    </div>
     <ModalDeleteConfirm v-if="modals.isModalDelete" />
     <ModalNote v-if="modals.isModalNote" />
   </div>
@@ -29,8 +32,15 @@ export default {
       'hideWrap',
       'hideModalDelete',
       'hideModalNote',
-      'removeColorWrap'
+      'removeColorWrap',
+      'hideModalDeleteNote',
+      'showModalDeleteNote'
     ]),
+    hModalDeleteNote () {
+      if (this.modals.isModalDeleteNote) {
+        this.hideModalDeleteNote()
+      }
+    },
     hide () {
       if (this.modals.isModalNote) {
         this.hideModalNote()
@@ -44,6 +54,8 @@ export default {
             item.isOpenMenu = true
           }
         })
+      } else if (this.notes.activeNote && this.modals.isModalDeleteNote) {
+        this.showModalDeleteNote()
       } else {
         this.notes.lists.map(item => {
           if (item.id === this.notes.activeNote) {
@@ -86,6 +98,19 @@ $wrapper-modal: wrapper-modal;
     bottom: 0;
     left: 0;
     z-index: 102;
+  }
+
+  &__double-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 105;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(#b2b0e7, .7);
   }
 
   &--color {

@@ -14,11 +14,13 @@
     </header>
     <div class="note__lists">
       <div class="note__lists-item" v-for="task in noteEl.todos" :key="task.id">
-        <label class="check">
+        <div class="check">
+          <label>
             <input class="check__input" type="checkbox" :checked="task.done">
             <span class="check__box"></span>
             <div>{{ task.title }}</div>
           </label>
+        </div>
       </div>
     </div>
   </div>

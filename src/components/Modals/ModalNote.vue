@@ -19,13 +19,13 @@
     <button class="modal__add" @click="addTodo" v-if="isShowAdd">+ Add Todo</button>
     <div class="modal__btns">
       <button class="modal__btn modal__btn--save" @click="pushNote(newNote)" v-if="saveNote"></button>
-      <button class="modal__btn modal__btn--cancel" @click="cancelNote"></button>
+      <button class="modal__btn modal__btn--cancel" @click="cancelNote(newNote)"></button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 import autoFocus from '@/directives/autofocus'
 import Todo from '@/components/Todo.vue'
 
@@ -54,7 +54,18 @@ export default {
       }
     }
   },
+  watch: {
+    newNote: {
+      handler: function (val) {
+        this.notes.activeNote = (val.title !== '' || val.todos.length !== 0) ? val.id : null
+      },
+      deep: true
+    }
+  },
   computed: {
+    ...mapState([
+      'notes'
+    ]),
     saveNote () {
       return this.newNote.title !== '' && this.newNote.todos.length && this.isShowAdd
     }
@@ -64,7 +75,8 @@ export default {
       'addNote',
       'hideModalNote',
       'hideWrap',
-      'removeColorWrap'
+      'removeColorWrap',
+      'showModalDeleteNote'
     ]),
     addTodo () {
       this.newTodo.title = ''
@@ -105,10 +117,14 @@ export default {
       this.removeColorWrap()
       this.hideModalNote()
     },
-    cancelNote () {
-      this.hideWrap()
-      this.removeColorWrap()
-      this.hideModalNote()
+    cancelNote (el) {
+      if (el.title !== '' || el.todos.length !== 0) {
+        this.showModalDeleteNote()
+      } else {
+        this.hideWrap()
+        this.removeColorWrap()
+        this.hideModalNote()
+      }
     }
   }
 }

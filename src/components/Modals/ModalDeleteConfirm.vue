@@ -16,7 +16,8 @@ export default {
   name: 'ModalDeleteConfirm',
   computed: {
     ...mapState([
-      'notes'
+      'notes',
+      'modals'
     ])
   },
   methods: {
@@ -24,21 +25,31 @@ export default {
       'removeNote',
       'hideModalDelete',
       'hideWrap',
-      'removeColorWrap'
+      'removeColorWrap',
+      'hideModalDeleteNote'
     ]),
     cancel () {
-      this.hideModalDelete()
-      this.removeColorWrap()
-      this.notes.lists.map(item => {
-        if (item.id === this.notes.activeNote) {
-          item.isOpenMenu = true
-        }
-      })
+      if (this.modals.isModalDeleteNote) {
+        this.hideModalDeleteNote()
+      } else {
+        this.hideModalDelete()
+        this.removeColorWrap()
+        this.notes.lists.map(item => {
+          if (item.id === this.notes.activeNote) {
+            item.isOpenMenu = true
+          }
+        })
+      }
     },
     remove () {
       this.removeNote(this.notes.activeNote)
       this.hideModalDelete()
       this.hideWrap()
+      this.notes.activeNote = null
+
+      if (this.modals.isModalDeleteNote) {
+        this.hideModalDeleteNote()
+      }
     }
   }
 }

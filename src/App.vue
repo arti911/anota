@@ -26,7 +26,10 @@ export default {
   },
   computed: {
     ...mapState(
-      ['wrapperModal']
+      [
+        'notes',
+        'wrapperModal'
+      ]
     )
   },
   methods: {
