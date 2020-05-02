@@ -27,7 +27,8 @@ export default {
       'hideModalNote',
       'hideWrap',
       'removeColorWrap',
-      'hideModalDeleteNote'
+      'hideModalDeleteNote',
+      'defaultValue'
     ]),
     cancel () {
       if (this.modals.isModalDeleteNote) {
@@ -51,6 +52,7 @@ export default {
       if (this.modals.isModalDeleteNote) {
         this.hideModalDeleteNote()
         this.hideModalNote()
+        this.defaultValue()
       }
     }
   }

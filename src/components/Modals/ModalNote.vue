@@ -1,12 +1,12 @@
 <template>
   <div class="modal">
     <label for="" class="modal__title">
-      <input type="text" placeholder="Title" v-model.trim="newNote.title" v-focus>
+      <input type="text" placeholder="Title" v-model.trim="modals.newNote.title" v-focus>
     </label>
     <div class="modal__todo">
-      <!-- {{ newNote.todos }} -->
+      {{ modals.newNote }}
       <Todo
-        v-for="(todo, index) in newNote.todos"
+        v-for="(todo, index) in modals.newNote.todos"
         :key="todo.id"
         :todo="todo"
         v-model="todo.title"
@@ -18,8 +18,8 @@
     </div>
     <button class="modal__add" @click="addTodo" v-if="isShowAdd">+ Add Todo</button>
     <div class="modal__btns">
-      <button class="modal__btn modal__btn--save" @click="pushNote(newNote)" v-if="saveNote"></button>
-      <button class="modal__btn modal__btn--cancel" @click="cancelNote(newNote)"></button>
+      <button class="modal__btn modal__btn--save" @click="pushNote(modals.newNote)" v-if="saveNote"></button>
+      <button class="modal__btn modal__btn--cancel" @click="cancelNote(modals.newNote)"></button>
     </div>
   </div>
 </template>
@@ -40,12 +40,6 @@ export default {
   data: () => {
     return {
       isShowAdd: true,
-      newNote: {
-        id: Date.now(),
-        title: '',
-        todos: [],
-        isOpenMenu: false
-      },
       newTodo: {
         id: Date.now(),
         title: '',
@@ -54,20 +48,24 @@ export default {
       }
     }
   },
-  watch: {
-    newNote: {
-      handler: function (val) {
-        this.notes.activeNote = (val.title !== '' || val.todos.length !== 0) ? val.id : null
+  mounted () {
+    this.$store.watch(
+      state => state.modals.newNote,
+      value => {
+        this.notes.activeNote = (value.title !== '' || value.todos.length !== 0) ? value.id : null
       },
-      deep: true
-    }
+      {
+        deep: true
+      }
+    )
   },
   computed: {
     ...mapState([
-      'notes'
+      'notes',
+      'modals'
     ]),
     saveNote () {
-      return this.newNote.title !== '' && this.newNote.todos.length && this.isShowAdd
+      return this.modals.newNote.title !== '' && this.modals.newNote.todos.length && this.isShowAdd
     }
   },
   methods: {
@@ -76,11 +74,12 @@ export default {
       'hideModalNote',
       'hideWrap',
       'removeColorWrap',
-      'showModalDeleteNote'
+      'showModalDeleteNote',
+      'defaultValue'
     ]),
     addTodo () {
       this.newTodo.title = ''
-      this.newNote.todos.push(this.newTodo)
+      this.modals.newNote.todos.push(this.newTodo)
       this.isShowAdd = false
     },
     saveTodo (index, todo) {
@@ -90,15 +89,15 @@ export default {
         edit: false
       }
 
-      this.newNote.todos.splice(index, 1, todo)
+      this.modals.newNote.todos.splice(index, 1, todo)
       this.isShowAdd = true
     },
     cancelTodo (id) {
-      this.newNote.todos = this.newNote.todos.filter(item => item.id !== id)
+      this.modals.newNote.todos = this.modals.newNote.todos.filter(item => item.id !== id)
       this.isShowAdd = true
     },
     removeTodo (id) {
-      this.newNote.todos = this.newNote.todos.filter(item => item.id !== id)
+      this.modals.newNote.todos = this.modals.newNote.todos.filter(item => item.id !== id)
     },
     doneTodo (index, todo) {
       todo = todo.done ? {
@@ -109,13 +108,14 @@ export default {
         done: true
       }
 
-      this.newNote.todos.splice(index, 1, todo)
+      this.modals.newNote.todos.splice(index, 1, todo)
     },
     pushNote (note) {
       this.addNote(note)
       this.hideWrap()
       this.removeColorWrap()
       this.hideModalNote()
+      this.defaultValue()
     },
     cancelNote (el) {
       if (el.title !== '' || el.todos.length !== 0) {

@@ -8,7 +8,7 @@
         <span></span>
       </button>
       <div class="note__menu" v-if="noteEl.isOpenMenu">
-        <button class="note__menu-item note__menu-item--edit">Edit</button>
+        <button class="note__menu-item note__menu-item--edit" @click="openModalNote(noteEl)">Edit</button>
         <button class="note__menu-item note__menu-item--del" @click="openModalDelete(noteEl.id)">Delete</button>
       </div>
     </header>
@@ -42,11 +42,19 @@ export default {
       'addColorWrap',
       'openMenu',
       'showModalDelete',
+      'showModalNote',
       'closeMenu'
     ]),
     open (id) {
       this.showWrap()
       this.openMenu(id)
+    },
+    openModalNote (el) {
+      const copyNote = Object.assign({}, el)
+
+      this.showWrap(true)
+      this.showModalNote(copyNote)
+      this.closeMenu(el.id)
     },
     openModalDelete (id) {
       this.addColorWrap()
