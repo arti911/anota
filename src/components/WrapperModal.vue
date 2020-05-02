@@ -42,10 +42,15 @@ export default {
       }
     },
     hide () {
-      if (this.modals.isModalNote) {
+      if (this.notes.activeNote && !this.notes.lists.find(item => item.id === this.notes.activeNote)) {
+        console.log(3)
+        this.showModalDeleteNote()
+      } else if (this.modals.isModalNote) {
+        console.log(1)
         this.hideModalNote()
         this.hideWrap()
       } else if (this.modals.isModalDelete) {
+        console.log(2)
         this.hideModalDelete()
 
         this.removeColorWrap()
@@ -54,9 +59,8 @@ export default {
             item.isOpenMenu = true
           }
         })
-      } else if (this.notes.activeNote && this.modals.isModalDeleteNote) {
-        this.showModalDeleteNote()
       } else {
+        console.log(4)
         this.notes.lists.map(item => {
           if (item.id === this.notes.activeNote) {
             item.isOpenMenu = false

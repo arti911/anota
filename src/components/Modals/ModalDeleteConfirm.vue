@@ -24,6 +24,7 @@ export default {
     ...mapMutations([
       'removeNote',
       'hideModalDelete',
+      'hideModalNote',
       'hideWrap',
       'removeColorWrap',
       'hideModalDeleteNote'
@@ -49,6 +50,7 @@ export default {
 
       if (this.modals.isModalDeleteNote) {
         this.hideModalDeleteNote()
+        this.hideModalNote()
       }
     }
   }
