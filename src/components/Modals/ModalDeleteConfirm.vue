@@ -17,26 +17,24 @@ export default {
   computed: {
     ...mapState([
       'notes',
-      'modals'
+      'wrapperModal'
     ])
   },
   methods: {
     ...mapMutations([
+      'hideWrap',
+      'hideDeleteNote',
       'removeNote',
       'removeColorWrap',
-      'hideWrap',
-      'hideConfirm',
-      'hideModalNote',
-      'hideModalDelete',
-      'hideModalDeleteNote',
+      'hideConfirmDeleteNote',
+      'hideAddNote',
       'defaultValue'
     ]),
     cancel () {
-      if (this.modals.isModalDeleteNote) {
-        this.hideConfirm()
-        this.hideModalDeleteNote()
+      if (this.wrapperModal.isConfirmDeleteNote) {
+        this.hideConfirmDeleteNote()
       } else {
-        this.hideModalDelete()
+        this.hideDeleteNote()
         this.removeColorWrap()
         this.notes.lists.map(item => {
           if (item.id === this.notes.activeNote) {
@@ -46,17 +44,17 @@ export default {
       }
     },
     remove () {
-      this.removeNote(this.notes.activeNote)
-      this.hideModalDelete()
-      this.hideWrap()
-      this.notes.activeNote = null
-
-      if (this.modals.isModalDeleteNote) {
-        this.hideConfirm()
-        this.hideModalDeleteNote()
-        this.hideModalNote()
+      if (this.wrapperModal.isConfirmDeleteNote) {
         this.defaultValue()
+        this.hideConfirmDeleteNote()
+        this.hideAddNote()
+      } else {
+        this.removeNote(this.notes.activeNote)
+        this.notes.activeNote = null
       }
+
+      this.hideWrap()
+      this.hideDeleteNote()
     }
   }
 }

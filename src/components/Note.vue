@@ -40,22 +40,24 @@ export default {
       'openMenu',
       'closeMenu',
       'showWrap',
-      'showModalNote',
-      'showModalDelete',
+      'showMenuNote',
+      'showEditNote',
+      'showDeleteNote',
       'addColorWrap'
     ]),
     open (id) {
       this.showWrap()
+      this.showMenuNote()
       this.openMenu(id)
     },
     openModalNote (el) {
       this.showWrap(true)
       this.closeMenu(el.id)
-      this.showModalNote(el)
+      this.showEditNote(el)
     },
     openModalDelete (id) {
       this.addColorWrap()
-      this.showModalDelete()
+      this.showDeleteNote()
       this.closeMenu(id)
     }
   }

@@ -35,11 +35,11 @@ export default {
   methods: {
     ...mapMutations([
       'showWrap',
-      'showModalNote'
+      'showAddNote'
     ]),
     show () {
       this.showWrap(true)
-      this.showModalNote()
+      this.showAddNote()
     }
   }
 }

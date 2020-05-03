@@ -16,19 +16,18 @@ export default {
   name: 'ModalCamcelEditing',
   methods: {
     ...mapMutations([
-      'hideConfirm',
-      'hideModalCancelEditing',
       'hideWrap',
+      'hideConfirmEditNote',
+      'hideEditNote',
       'defaultValue'
     ]),
     cancel () {
-      this.hideConfirm()
-      this.hideModalCancelEditing()
+      this.hideConfirmEditNote()
     },
     remove () {
+      this.hideConfirmEditNote()
+      this.hideEditNote()
       this.hideWrap()
-      this.hideConfirm()
-      this.hideModalCancelEditing()
       this.defaultValue()
     }
   }

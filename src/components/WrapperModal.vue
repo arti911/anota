@@ -1,12 +1,31 @@
 <template>
   <div class="wrapper-modal" :class="wrapperModal.color ? 'wrapper-modal--color' : ''">
-    <div class="wrapper-modal__wrap" @click="hide"></div>
-    <div class="wrapper-modal__double-wrap" v-if="wrapperModal.confirm" @click="hModalDeleteNote">
-      <ModalCancelEditing v-if="modals.isModalCancelEditing" />
-      <ModalDeleteConfirm v-if="modals.isModalDeleteNote" />
+    <div class="wrapper-modal__wrap" v-if="wrapperModal.isMenuNote" @click="closeMenuNote"></div>
+
+    <div class="wrapper-modal__wrap" v-if="wrapperModal.isAddNote">
+      <div class="wrapper-modal__close" @click="closeAddNote"></div>
+      <ModalNote />
     </div>
-    <ModalDeleteConfirm v-if="modals.isModalDelete" />
-    <ModalNote v-if="modals.isModalNote" />
+
+    <div class="wrapper-modal__wrap" v-if="wrapperModal.isDeleteNote">
+      <div class="wrapper-modal__close" @click="closeDeleteNote"></div>
+      <ModalDeleteConfirm />
+    </div>
+
+    <div class="wrapper-modal__wrap" v-if="wrapperModal.isEditNote">
+      <div class="wrapper-modal__close" @click="closeEditNote"></div>
+      <ModalNote />
+    </div>
+
+    <div class="wrapper-modal__wrap wrapper-modal__wrap--confirm wrapper-modal--color" v-if="wrapperModal.isConfirmDeleteNote">
+      <div class="wrapper-modal__close" @click="closeConfirmDeleteNote"></div>
+      <ModalDeleteConfirm />
+    </div>
+
+    <div class="wrapper-modal__wrap wrapper-modal__wrap--confirm wrapper-modal--color" v-if="wrapperModal.isConfirmEditNote">
+      <div class="wrapper-modal__close" @click="closeConfirmEditNote"></div>
+      <ModalCancelEditing />
+    </div>
   </div>
 </template>
 
@@ -26,57 +45,57 @@ export default {
   computed: {
     ...mapState([
       'notes',
-      'modals',
       'wrapperModal'
     ])
   },
   methods: {
     ...mapMutations([
-      'showModalDeleteNote',
-      'showConfirm',
-      'showModalCancelEditing',
       'removeColorWrap',
       'hideWrap',
-      'hideModalNote',
-      'hideModalDelete',
-      'hideModalDeleteNote',
-      'hideConfirm'
+      'hideMenuNote',
+      'hideDeleteNote',
+      'hideAddNote',
+      'showConfirmDeleteNote',
+      'hideConfirmDeleteNote',
+      'showConfirmEditNote',
+      'hideConfirmEditNote'
     ]),
-    hModalDeleteNote () {
-      if (this.modals.isModalDeleteNote) {
-        this.hideConfirm()
-        this.hideModalDeleteNote()
+    closeAddNote () {
+      if (this.wrapperModal.newNote.title !== '' || this.wrapperModal.newNote.todos.length !== 0) {
+        this.showConfirmDeleteNote()
+      } else {
+        this.hideAddNote()
+        this.hideWrap()
       }
     },
-    hide () {
-      if (this.notes.activeNote && this.notes.lists.find(item => item.id === this.notes.activeNote)) {
-        this.showConfirm()
-        this.showModalCancelEditing()
-      } else if (this.notes.activeNote && !this.notes.lists.find(item => item.id === this.notes.activeNote)) {
-        this.showConfirm()
-        this.showModalDeleteNote()
-      } else if (this.modals.isModalNote) {
-        this.hideModalNote()
-        this.hideWrap()
-      } else if (this.modals.isModalDelete) {
-        this.hideModalDelete()
+    closeMenuNote () {
+      this.notes.lists.map(item => {
+        if (item.id === this.notes.activeNote) {
+          item.isOpenMenu = false
+        }
+      })
 
-        this.removeColorWrap()
-        this.notes.lists.map(item => {
-          if (item.id === this.notes.activeNote) {
-            item.isOpenMenu = true
-          }
-        })
-      } else {
-        this.notes.lists.map(item => {
-          if (item.id === this.notes.activeNote) {
-            item.isOpenMenu = false
-          }
-        })
-
-        this.hideWrap()
-        this.notes.activeNote = null
-      }
+      this.hideMenuNote()
+      this.hideWrap()
+      this.notes.activeNote = null
+    },
+    closeDeleteNote () {
+      this.hideDeleteNote()
+      this.removeColorWrap()
+      this.notes.lists.map(item => {
+        if (item.id === this.notes.activeNote) {
+          item.isOpenMenu = true
+        }
+      })
+    },
+    closeConfirmDeleteNote () {
+      this.hideConfirmDeleteNote()
+    },
+    closeEditNote () {
+      this.showConfirmEditNote()
+    },
+    closeConfirmEditNote () {
+      this.hideConfirmEditNote()
     }
   }
 }
@@ -92,14 +111,23 @@ $wrapper-modal: wrapper-modal;
   right: 0;
   bottom: 0;
   z-index: 101;
-  display: grid;
-  grid-template-columns: minmax(320px, 500px);
-  align-items: center;
-  justify-content: center;
   transition: background-color .2s ease;
 
   & + .add-note {
     display: none;
+  }
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 103;
+
+    .modal {
+      z-index: 105;
+    }
   }
 
   &__wrap {
@@ -108,6 +136,17 @@ $wrapper-modal: wrapper-modal;
     right: 0;
     bottom: 0;
     left: 0;
+    display: grid;
+    grid-template-columns: minmax(320px, 500px);
+    align-items: center;
+    justify-content: center;
+
+    &--confirm {
+      z-index: 104;
+    }
+  }
+
+  &__menu-note {
     z-index: 102;
   }
 
