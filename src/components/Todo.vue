@@ -15,6 +15,7 @@
         :value="value"
         @input="$emit('input', $event.target.value)"
         class="check__value"
+        @keyup.enter="$emit('save-todo')"
         v-focus
         v-if="todo.edit"
       >
@@ -66,6 +67,9 @@ export default {
   },
   computed: {},
   methods: {
+    submit (val) {
+      alert(val)
+    },
     editTodo (todo) {
       this.oldValue = todo.title
       this.done = todo.done

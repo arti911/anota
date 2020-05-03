@@ -84,14 +84,16 @@ export default {
       this.isShowAdd = false
     },
     saveTodo (index, todo) {
-      todo = {
-        ...todo,
-        id: Date.now(),
-        edit: false
-      }
+      if (todo.title !== '') {
+        todo = {
+          ...todo,
+          id: Date.now(),
+          edit: false
+        }
 
-      this.wrapperModal.newNote.todos.splice(index, 1, todo)
-      this.isShowAdd = true
+        this.wrapperModal.newNote.todos.splice(index, 1, todo)
+        this.isShowAdd = true
+      }
     },
     cancelTodo (id) {
       this.wrapperModal.newNote.todos = this.wrapperModal.newNote.todos.filter(item => item.id !== id)
