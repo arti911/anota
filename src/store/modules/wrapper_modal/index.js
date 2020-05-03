@@ -1,7 +1,8 @@
 export default {
   state: {
     isShow: false,
-    color: false
+    color: false,
+    confirm: false
   },
   mutations: {
     showWrap: (state, color = false) => {
@@ -16,6 +17,12 @@ export default {
     },
     removeColorWrap: state => {
       state.color = false
+    },
+    showConfirm: state => {
+      state.confirm = true
+    },
+    hideConfirm: state => {
+      state.confirm = false
     }
   }
 }

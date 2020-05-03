@@ -23,15 +23,17 @@ export default {
   methods: {
     ...mapMutations([
       'removeNote',
-      'hideModalDelete',
-      'hideModalNote',
-      'hideWrap',
       'removeColorWrap',
+      'hideWrap',
+      'hideConfirm',
+      'hideModalNote',
+      'hideModalDelete',
       'hideModalDeleteNote',
       'defaultValue'
     ]),
     cancel () {
       if (this.modals.isModalDeleteNote) {
+        this.hideConfirm()
         this.hideModalDeleteNote()
       } else {
         this.hideModalDelete()
@@ -50,6 +52,7 @@ export default {
       this.notes.activeNote = null
 
       if (this.modals.isModalDeleteNote) {
+        this.hideConfirm()
         this.hideModalDeleteNote()
         this.hideModalNote()
         this.defaultValue()

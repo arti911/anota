@@ -7,7 +7,7 @@ export default {
         title: 'Name',
         todos: [
           {
-            id: 0,
+            id: 0.5,
             title: 'Study for test',
             edit: false,
             done: false
@@ -44,7 +44,7 @@ export default {
         title: 'Numbers',
         todos: [
           {
-            id: 0,
+            id: 0.5,
             title: '1',
             edit: false,
             done: false
@@ -72,7 +72,13 @@ export default {
       })
     },
     addNote: (state, note) => {
-      state.lists.push(note)
+      const index = state.lists.findIndex(item => item.id === note.id)
+
+      if (index >= 0) {
+        state.lists.splice(index, 1, note)
+      } else {
+        state.lists.push(note)
+      }
     },
     removeNote: (state, id) => {
       state.lists = state.lists.filter(item => item.id !== id)

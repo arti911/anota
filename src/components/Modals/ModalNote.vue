@@ -71,10 +71,12 @@ export default {
   methods: {
     ...mapMutations([
       'addNote',
-      'hideModalNote',
-      'hideWrap',
-      'removeColorWrap',
+      'showConfirm',
       'showModalDeleteNote',
+      'showModalCancelEditing',
+      'hideWrap',
+      'hideModalNote',
+      'removeColorWrap',
       'defaultValue'
     ]),
     addTodo () {
@@ -118,7 +120,13 @@ export default {
       this.defaultValue()
     },
     cancelNote (el) {
-      if (el.title !== '' || el.todos.length !== 0) {
+      const index = this.notes.lists.findIndex(item => item.id === el.id)
+
+      if (index >= 0) {
+        this.showConfirm()
+        this.showModalCancelEditing()
+      } else if (el.title !== '' || el.todos.length !== 0) {
+        this.showConfirm()
         this.showModalDeleteNote()
       } else {
         this.hideWrap()

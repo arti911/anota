@@ -16,8 +16,7 @@
       <div class="note__lists-item" v-for="task in noteEl.todos" :key="task.id">
         <div class="check">
           <label>
-            <input class="check__input" type="checkbox" :checked="task.done">
-            <span class="check__box"></span>
+            <span class="check__box" :class="task.done ? 'check__box--checked' : ''"></span>
             <div>{{ task.title }}</div>
           </label>
         </div>
@@ -38,23 +37,21 @@ export default {
   computed: {},
   methods: {
     ...mapMutations([
-      'showWrap',
-      'addColorWrap',
       'openMenu',
-      'showModalDelete',
+      'closeMenu',
+      'showWrap',
       'showModalNote',
-      'closeMenu'
+      'showModalDelete',
+      'addColorWrap'
     ]),
     open (id) {
       this.showWrap()
       this.openMenu(id)
     },
     openModalNote (el) {
-      const copyNote = Object.assign({}, el)
-
       this.showWrap(true)
-      this.showModalNote(copyNote)
       this.closeMenu(el.id)
+      this.showModalNote(el)
     },
     openModalDelete (id) {
       this.addColorWrap()

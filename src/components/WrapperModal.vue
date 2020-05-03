@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper-modal" :class="wrapperModal.color ? 'wrapper-modal--color' : ''">
     <div class="wrapper-modal__wrap" @click="hide"></div>
-    <div class="wrapper-modal__double-wrap" v-if="modals.isModalDeleteNote" @click="hModalDeleteNote">
-      <ModalDeleteConfirm />
+    <div class="wrapper-modal__double-wrap" v-if="wrapperModal.confirm" @click="hModalDeleteNote">
+      <ModalCancelEditing v-if="modals.isModalCancelEditing" />
+      <ModalDeleteConfirm v-if="modals.isModalDeleteNote" />
     </div>
     <ModalDeleteConfirm v-if="modals.isModalDelete" />
     <ModalNote v-if="modals.isModalNote" />
@@ -11,12 +12,14 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import ModalCancelEditing from '@/components/Modals/ModalCancelEditing'
 import ModalDeleteConfirm from '@/components/Modals/ModalDeleteConfirm'
 import ModalNote from '@/components/Modals/ModalNote'
 
 export default {
   name: 'WrapperModal',
   components: {
+    ModalCancelEditing,
     ModalDeleteConfirm,
     ModalNote
   },
@@ -29,20 +32,28 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'hideWrap',
-      'hideModalDelete',
-      'hideModalNote',
+      'showModalDeleteNote',
+      'showConfirm',
+      'showModalCancelEditing',
       'removeColorWrap',
+      'hideWrap',
+      'hideModalNote',
+      'hideModalDelete',
       'hideModalDeleteNote',
-      'showModalDeleteNote'
+      'hideConfirm'
     ]),
     hModalDeleteNote () {
       if (this.modals.isModalDeleteNote) {
+        this.hideConfirm()
         this.hideModalDeleteNote()
       }
     },
     hide () {
-      if (this.notes.activeNote && !this.notes.lists.find(item => item.id === this.notes.activeNote)) {
+      if (this.notes.activeNote && this.notes.lists.find(item => item.id === this.notes.activeNote)) {
+        this.showConfirm()
+        this.showModalCancelEditing()
+      } else if (this.notes.activeNote && !this.notes.lists.find(item => item.id === this.notes.activeNote)) {
+        this.showConfirm()
         this.showModalDeleteNote()
       } else if (this.modals.isModalNote) {
         this.hideModalNote()

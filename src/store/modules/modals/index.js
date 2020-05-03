@@ -1,8 +1,9 @@
 export default {
   state: {
     isModalDelete: false,
-    isModalNote: false,
     isModalDeleteNote: false,
+    isModalNote: false,
+    isModalCancelEditing: false,
     newNote: {
       id: Date.now(),
       title: '',
@@ -25,13 +26,19 @@ export default {
     },
     showModalNote: (state, obj) => {
       if (obj) {
-        state.newNote = obj
+        state.newNote = JSON.parse(JSON.stringify(obj))
       }
 
       state.isModalNote = true
     },
     hideModalNote: state => {
       state.isModalNote = false
+    },
+    showModalCancelEditing: state => {
+      state.isModalCancelEditing = true
+    },
+    hideModalCancelEditing: state => {
+      state.isModalCancelEditing = false
     },
     defaultValue: state => {
       state.newNote = {
