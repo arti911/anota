@@ -11,7 +11,9 @@
     <main class="main">
       <router-view/>
     </main>
-    <WrapperModal v-if="wrapperModal.isShow" />
+    <transition name="modal">
+      <WrapperModal v-if="wrapperModal.isShow" />
+    </transition>
     <button class="add-note" @click="show"></button>
   </div>
 </template>

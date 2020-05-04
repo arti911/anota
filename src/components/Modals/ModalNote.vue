@@ -3,7 +3,7 @@
     <label for="" class="modal__title">
       <input type="text" placeholder="Title" v-model.trim="wrapperModal.newNote.title" v-focus>
     </label>
-    <div class="modal__todo">
+    <vue-scroll :ops="ops" class="modal__todo">
       <Todo
         v-for="(todo, index) in wrapperModal.newNote.todos"
         :key="todo.id"
@@ -14,7 +14,7 @@
         @remove-todo="removeTodo(todo.id)"
         @done-todo="doneTodo(index, todo)"
       />
-    </div>
+    </vue-scroll>
     <button class="modal__add" @click="addTodo" v-if="isShowAdd">+ Add Todo</button>
     <div class="modal__btns">
       <button class="modal__btn modal__btn--save" @click="pushNote(wrapperModal.newNote)" v-if="saveNote"></button>
@@ -44,6 +44,23 @@ export default {
         title: '',
         edit: true,
         done: false
+      },
+      ops: {
+        rail: {
+          background: '#0f2431',
+          opacity: 0.5,
+          size: '5px',
+          gutterOfEnds: null,
+          gutterOfSide: '0px',
+          keepShow: false
+        },
+        bar: {
+          keepShow: true,
+          background: '#0f2431',
+          opacity: 0.7,
+          minSize: 0.2,
+          size: '5px'
+        }
       }
     }
   },

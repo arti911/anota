@@ -7,25 +7,33 @@
       <ModalNote />
     </div>
 
-    <div class="wrapper-modal__wrap" v-if="wrapperModal.isDeleteNote">
-      <div class="wrapper-modal__close" @click="closeDeleteNote"></div>
-      <ModalDeleteConfirm />
-    </div>
+    <transition name="modal">
+      <div class="wrapper-modal__wrap" v-if="wrapperModal.isDeleteNote">
+        <div class="wrapper-modal__close" @click="closeDeleteNote"></div>
+        <ModalDeleteConfirm />
+      </div>
+    </transition>
 
-    <div class="wrapper-modal__wrap" v-if="wrapperModal.isEditNote">
-      <div class="wrapper-modal__close" @click="closeEditNote"></div>
-      <ModalNote />
-    </div>
+    <transition name="modal">
+      <div class="wrapper-modal__wrap" v-if="wrapperModal.isEditNote">
+        <div class="wrapper-modal__close" @click="closeEditNote"></div>
+        <ModalNote />
+      </div>
+    </transition>
 
-    <div class="wrapper-modal__wrap wrapper-modal__wrap--confirm wrapper-modal--color" v-if="wrapperModal.isConfirmDeleteNote">
-      <div class="wrapper-modal__close" @click="closeConfirmDeleteNote"></div>
-      <ModalDeleteConfirm />
-    </div>
+    <transition name="modal">
+      <div class="wrapper-modal__wrap wrapper-modal__wrap--confirm wrapper-modal--color" v-if="wrapperModal.isConfirmDeleteNote">
+        <div class="wrapper-modal__close" @click="closeConfirmDeleteNote"></div>
+        <ModalDeleteConfirm />
+      </div>
+    </transition>
 
-    <div class="wrapper-modal__wrap wrapper-modal__wrap--confirm wrapper-modal--color" v-if="wrapperModal.isConfirmEditNote">
-      <div class="wrapper-modal__close" @click="closeConfirmEditNote"></div>
-      <ModalCancelEditing />
-    </div>
+    <transition name="modal">
+      <div class="wrapper-modal__wrap wrapper-modal__wrap--confirm wrapper-modal--color" v-if="wrapperModal.isConfirmEditNote">
+        <div class="wrapper-modal__close" @click="closeConfirmEditNote"></div>
+        <ModalCancelEditing />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -113,6 +121,10 @@ $wrapper-modal: wrapper-modal;
   z-index: 101;
   transition: background-color .2s ease;
 
+  &--color {
+    background-color: rgba(#b2b0e7, .7);
+  }
+
   & + .add-note {
     display: none;
   }
@@ -140,6 +152,7 @@ $wrapper-modal: wrapper-modal;
     grid-template-columns: minmax(320px, 500px);
     align-items: center;
     justify-content: center;
+    padding: 20px 0;
 
     &--confirm {
       z-index: 104;
@@ -148,23 +161,6 @@ $wrapper-modal: wrapper-modal;
 
   &__menu-note {
     z-index: 102;
-  }
-
-  &__double-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 105;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(#b2b0e7, .7);
-  }
-
-  &--color {
-    background-color: rgba(#b2b0e7, .7);
   }
 }
 </style>

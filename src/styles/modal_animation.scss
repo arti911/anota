@@ -1,0 +1,26 @@
+.modal-enter-active,
+.modal-leave-active {
+  transition: background-color .2s ease;
+
+  .modal {
+    transition: transform .2s ease, opacity .2s ease;
+  }
+}
+
+.modal-enter {
+  background-color: transparent;
+
+  .modal {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.modal-leave-to {
+  background-color: transparent;
+
+  .modal {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}

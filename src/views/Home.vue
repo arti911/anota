@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <transition-group class="container" tag="div" name="note">
     <Note v-for="note in notes.lists" :key="note.id" :noteEl="note" />
-  </div>
+  </transition-group>
 </template>
 
 <script>

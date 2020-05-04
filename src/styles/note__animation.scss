@@ -1,0 +1,8 @@
+.note-enter-active {
+  transition: transform .2s .3s ease, opacity .2s .3s ease;
+}
+
+.note-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
