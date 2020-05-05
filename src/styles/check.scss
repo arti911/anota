@@ -10,12 +10,43 @@
     gap: 10px;
   }
 
+  &__line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #0f2431;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: inherit;
+      z-index: 1;
+      background-color: #b2b0e7;;
+      transition: width .2s ease;
+    }
+  }
+
   &__value {
-    border-bottom: 1px solid red;
+    position: relative;
+
+    input {
+      width: 100%;
+      height: 100%;
+
+      &:focus {
+        & + .check__line::after {
+          width: 100%;
+        }
+      }
+    }
   }
 
   &__actions {
-    position: relative;
     display: flex;
     justify-content: space-between;
     justify-self: end;
@@ -26,6 +57,9 @@
   }
 
   &__burger {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     display: flex;
     cursor: pointer;
 
@@ -40,9 +74,10 @@
   }
 
   &__menu {
-    position: absolute;
-    top: 0;
-    right: 0;
+    // position: absolute;
+    // top: 0;
+    // right: 0;
+    max-height: 100vh;
     background-color: #0f2431;
     border-radius: 6px;
     overflow: hidden;
@@ -71,6 +106,11 @@
     -webkit-appearance: none;
     appearance: none;
   
+    &:focus + .check__box,
+    &:checked:focus + .check__box {
+      border-color: #b2b0e7;
+    }
+
     &:checked + .check__box {
       border-color: rgba(#0f2431, 1);
       background-color: #0f2431;

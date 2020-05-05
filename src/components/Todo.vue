@@ -14,28 +14,31 @@
           {{ todo.title }}
         </div>
       </label>
-      <input
-        type="text"
-        :value="value"
-        @input="$emit('input', $event.target.value)"
-        class="check__value"
-        @keyup.enter="$emit('save-todo')"
-        v-focus
-        v-if="todo.edit"
-      >
+      <span class="check__value" v-if="todo.edit">
+        <input
+          type="text"
+          :value="value"
+          @input="$emit('input', $event.target.value)"
+          @keyup.enter="$emit('save-todo')"
+          v-focus
+        >
+        <span class="check__line"></span>
+      </span>
       <div class="check__actions" v-else>
         <button class="check__burger" @click="cuurentTodo = todo.id">
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <div class="check__menu" v-if="cuurentTodo">
-          <button class="check__menu-item check__menu-item--edit" @click="editTodo(todo)">Edit</button>
-          <button
-            class="check__menu-item check__menu-item--remove"
-            @click="$emit('remove-todo')"
-          >Remove</button>
-        </div>
+        <transition name="check__menu">
+          <div class="check__menu" v-if="cuurentTodo">
+            <button class="check__menu-item check__menu-item--edit" @click="editTodo(todo)">Edit</button>
+            <button
+              class="check__menu-item check__menu-item--remove"
+              @click="$emit('remove-todo')"
+            >Remove</button>
+          </div>
+        </transition>
       </div>
     </div>
 
@@ -95,6 +98,16 @@ export default {
 
 <style scoped lang="scss">
 $todo: todo;
+
+.check__menu-enter-active,
+.check__menu-leave-active {
+  transition: max-height .2s ease;
+}
+
+.check__menu-enter,
+.check__menu-leave-to {
+  max-height: 0;
+}
 
 .#{$todo} {
   display: grid;
