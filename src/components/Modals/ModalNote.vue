@@ -2,14 +2,14 @@
   <div class="modal">
     <label for="" class="modal__title">
       <input type="text" placeholder="Title" v-model.trim="wrapperModal.newNote.title" v-focus>
-      <span class="modal__title-line"></span>
+      <div class="modal__title-line"></div>
     </label>
     <vue-scroll :ops="ops" class="modal__todo">
       <Todo
         v-for="(todo, index) in wrapperModal.newNote.todos"
         :key="todo.id"
         :todo="todo"
-        v-model.trim="todo.title"
+        v-model="todo.title"
         @save-todo="saveTodo(index, todo)"
         @cancel-todo="cancelTodo(todo.id)"
         @remove-todo="removeTodo(todo.id)"
