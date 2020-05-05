@@ -104,6 +104,7 @@ $note: note;
   align-content: flex-start;
   background-color: #b5f4fa;
   border-radius: 6px;
+  box-shadow: 0px 10px 15px -15px #0f2431;
 
   @media (min-width: 768px) {
     grid-column: span 6;
