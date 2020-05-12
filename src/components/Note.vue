@@ -183,6 +183,8 @@ $note: note;
   }
 
   &__lists {
+    height: auto!important;
+
     .__view {
       display: grid;
       grid-template-columns: 1fr;
