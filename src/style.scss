@@ -1,0 +1,31 @@
+.anota {
+  position: relative;
+  min-height: 100vh;
+  text-align: center;
+
+  &__header {
+    background: transparent;
+  }
+
+  &__main {
+    position: relative;
+    padding: 20px;
+  }
+
+  &__btn-add-note {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+  }
+}
+
+.ant-spin-container {
+  max-height: 250px;
+  overflow: auto;
+}
+
+.ant-list-item {
+  @media screen and (max-width: 576px) {
+    flex-wrap: nowrap;
+  }
+}

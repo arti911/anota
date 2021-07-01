@@ -1,0 +1,10 @@
+$parent: "anota-row";
+
+.#{$parent} {
+  flex-wrap: wrap;
+  
+  @media screen and (min-width: 768px) {
+    flex-wrap: nowrap;
+    gap: 16px;
+  }
+}

@@ -1,32 +1,7 @@
-* {
+*,
+*::before,
+*::after {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-}
-
-html {
-  font-weight: 400;
-  font-family: 'Lato', sans-serif;
-}
-
-input {
-  border: 0;
-  outline: 0;
-  padding: 0;
-  font-weight: 400;
-  font-family: 'Lato', sans-serif;
-}
-
-button {
-  border: 0;
-  padding: 0;
-  outline: 0;
-  background-color: transparent;
-  font-weight: 400;
-  font-family: 'Lato', sans-serif;
-  box-shadow: 0 0 5px transparent;
-  transition: box-shadow .2s ease;
-
-  &:focus {
-    box-shadow: 0 0 7px rgba(15, 36, 49, 1);
-  }
 }

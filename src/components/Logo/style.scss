@@ -1,0 +1,20 @@
+$logo-colors: (
+  1: transparent,
+  2: #b5f4fa,
+  3: #b2b0e7,
+  4: #8dabe5,
+);
+
+.logo {
+  display: inline-grid;
+  grid-template-rows: 25px 25px;
+  grid-template-columns: 25px 25px;
+  border-radius: 6px;
+  overflow: hidden;
+
+  @each $count, $color in $logo-colors {
+    span:nth-child(#{$count}) {
+      background-color: $color;
+    }
+  }
+}

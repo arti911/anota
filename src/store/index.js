@@ -1,15 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
-import notes from './modules/notes'
-import wrapperModal from './modules/wrapper_modal'
+import { configureStore } from "@reduxjs/toolkit";
 
-Vue.use(Vuex)
+import modalSlice from "../components/Modal/modalSlice";
+import appSlice from "../appSlice";
+import todoSlice from "../components/Modal/Todo/todoSlice";
 
-export default new Vuex.Store({
-  modules: {
-    notes,
-    wrapperModal
+export default configureStore({
+  reducer: {
+    anota: appSlice,
+    modal: modalSlice,
+    todo: todoSlice,
   },
-  plugins: [createPersistedState()]
-})
+});
