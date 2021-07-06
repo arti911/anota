@@ -25,6 +25,7 @@ const AddModal = () => {
     dispatch(cleatTodos());
     dispatch(setCurrentNoteIndex(null));
     dispatch(setTitleEdit("Новая заметка"));
+    setTodoTitle("");
   };
 
   const saveEdit = useCallback((index) => {
@@ -58,6 +59,7 @@ const AddModal = () => {
       dispatch(onToggleShow(false));
       dispatch(setTitleEdit("Новая заметка"));
       dispatch(cleatTodos());
+      setTodoTitle("");
     } else {
       message.warning("Добавьте контент в заметку!");
     }
