@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/anota/static/css/main.1887930a.chunk.css",
+    "main.css": "/anota/static/css/main.6bc3ee87.chunk.css",
     "main.js": "/anota/static/js/main.1d117260.chunk.js",
     "main.js.map": "/anota/static/js/main.1d117260.chunk.js.map",
     "runtime-main.js": "/anota/static/js/runtime-main.d9f89b8c.js",
@@ -14,14 +14,14 @@
     "service-worker.js": "/anota/service-worker.js",
     "service-worker.js.map": "/anota/service-worker.js.map",
     "static/css/2.ebe1538b.chunk.css.map": "/anota/static/css/2.ebe1538b.chunk.css.map",
-    "static/css/main.1887930a.chunk.css.map": "/anota/static/css/main.1887930a.chunk.css.map",
+    "static/css/main.6bc3ee87.chunk.css.map": "/anota/static/css/main.6bc3ee87.chunk.css.map",
     "static/js/2.59a51cdf.chunk.js.LICENSE.txt": "/anota/static/js/2.59a51cdf.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d9f89b8c.js",
     "static/css/2.ebe1538b.chunk.css",
     "static/js/2.59a51cdf.chunk.js",
-    "static/css/main.1887930a.chunk.css",
+    "static/css/main.6bc3ee87.chunk.css",
     "static/js/main.1d117260.chunk.js"
   ]
 }
