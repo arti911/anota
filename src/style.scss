@@ -1,6 +1,7 @@
 .anota {
   position: relative;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   text-align: center;
 
   &__header {
@@ -14,8 +15,9 @@
 
   &__btn-add-note {
     position: fixed;
-    right: 25px;
+    left: 50%;
     bottom: 25px;
+    transform: translateX(-50%);
   }
 }
 

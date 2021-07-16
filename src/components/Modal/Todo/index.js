@@ -3,6 +3,8 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
+import DragHandle from "../../DragHandle";
+
 import { checkTodo, removeTodo, toggleEdit } from "./todoSlice";
 
 const TodoModal = ({
@@ -58,7 +60,8 @@ const TodoModal = ({
   );
 
   return (
-    <List.Item actions={actions}>
+    <List.Item className="modal-list__item" actions={actions}>
+      <DragHandle />
       <Checkbox checked={todo.isCheck} onChange={onCheck}>
         {todo.title}
       </Checkbox>

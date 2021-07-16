@@ -15,6 +15,10 @@ $parent: "note";
       grid-template-rows: auto 1fr auto;
       height: 100%;
     }
+
+    & > * {
+      user-select: none;
+    }
   }
 
   &:nth-child(even) {

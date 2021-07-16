@@ -1,16 +1,22 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal, List, message } from "antd";
+import { Modal, message } from "antd";
+import arrayMove from "array-move";
+import ReactDOM from "react-dom";
 
 import TitleModal from "./Title";
-import TodoModal from "./Todo";
+import SortableList from "./SortableList";
 import InputModal from "./Input";
 
 import { saveNote, saveEditNote } from "../../appSlice";
 import { onToggleShow, setCurrentNoteIndex, setTitleEdit } from "./modalSlice";
-import { cleatTodos } from "./Todo/todoSlice";
+import { cleatTodos, sortTodos } from "./Todo/todoSlice";
+
+import "./style.scss";
 
 const AddModal = () => {
+  const itemListRef = useRef(null);
+
   const dispatch = useDispatch();
   const visible = useSelector((state) => state.modal.visibleModal);
   const todos = useSelector((state) => state.todo.todos);
@@ -29,18 +35,18 @@ const AddModal = () => {
   };
 
   const saveEdit = useCallback((index) => {
-    const data = {
-      note: {
-        id: Date.now(),
-        title: localTitle,
-        todos
-      },
-      index
-    };
+      const data = {
+        note: {
+          id: Date.now(),
+          title: localTitle,
+          todos
+        },
+        index
+      };
 
-    dispatch(saveEditNote(data));
-    dispatch(setCurrentNoteIndex(null));
-  }, [ dispatch, localTitle, todos ]);
+      dispatch(saveEditNote(data));
+      dispatch(setCurrentNoteIndex(null));
+    }, [ dispatch, localTitle, todos ]);
 
   const save = useCallback(() => {
     const data = {
@@ -65,6 +71,8 @@ const AddModal = () => {
     }
   }, [ dispatch, save, saveEdit, todos, currentNoteIndex ]);
 
+  const onSortEnd = ({ oldIndex, newIndex }) => dispatch(sortTodos(arrayMove(todos, oldIndex, newIndex)));
+
   return (
     <Modal
       title={<TitleModal title={localTitle} setTitleHandler={setLocalTitle} />}
@@ -80,18 +88,18 @@ const AddModal = () => {
         setTodoTitleHandler={setTodoTitle}
         setCurrentTodoHandler={setCurrentTodo}
       />
-      <List
-        dataSource={todos}
-        renderItem={(item, index) => (
-          <TodoModal
-            todos={todos}
-            todo={item}
-            index={index}
-            setTodoTitleHandler={setTodoTitle}
-            setCurrentTodoHandler={setCurrentTodo}
-          />
-        )}
-      ></List>
+      {todos.length > 0 && (
+        <SortableList
+          itemRef={itemListRef}
+          todos={todos}
+          setTodoTitleHandler={setTodoTitle}
+          setCurrentTodoHandler={setCurrentTodo}
+          onSortEnd={onSortEnd}
+          useDragHandle
+          helperClass="modal-list"
+          getContainer={() => ReactDOM.findDOMNode(itemListRef.current).parentElement}
+        />
+      )}
     </Modal>
   );
 };

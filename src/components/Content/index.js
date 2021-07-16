@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Layout, Button, Row, Col, } from "antd";
+import { Layout, Button, Row } from "antd";
 import { EditFilled } from "@ant-design/icons";
+import arrayMove from 'array-move';
 
-import Note from "../Note";
+import SortableListOfNotes from "../SortableListOfNotes";
 
 import { onToggleShow } from "../Modal/modalSlice";
+import { saveNotesAfterSorting } from "../../appSlice";
 
 const { Content } = Layout;
 
@@ -14,22 +16,14 @@ const ContentAnota = () => {
 
   const onShowModal = () => dispatch(onToggleShow(true));
 
+  const onSortEnd = ({oldIndex, newIndex}) => {
+    dispatch(saveNotesAfterSorting(arrayMove(notes, oldIndex, newIndex)));
+  };
+
   return (
     <Content className="anota__main">
       <Row gutter={[16, 24]}>
-        {notes.map((item, index) => (
-          <Col
-            className="note"
-            xs={24}
-            sm={24}
-            md={12}
-            lg={8}
-            xl={6}
-            key={item.id}
-          >
-            <Note {...item} index={index} />
-          </Col>
-        ))}
+        <SortableListOfNotes notes={notes} axis="xy" pressDelay={205} onSortEnd={onSortEnd} useWindowAsScrollContainer={true} />
       </Row>
       <Button
         type="primary"
