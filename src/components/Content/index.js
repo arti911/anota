@@ -23,7 +23,7 @@ const ContentAnota = () => {
   return (
     <Content className="anota__main">
       <Row gutter={[16, 24]}>
-        <SortableListOfNotes notes={notes} axis="xy" pressDelay={205} onSortEnd={onSortEnd} useWindowAsScrollContainer={true} />
+        <SortableListOfNotes axis="xy" pressDelay={205} onSortEnd={onSortEnd} useWindowAsScrollContainer={true} />
       </Row>
       <Button
         type="primary"
