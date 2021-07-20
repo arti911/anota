@@ -4,7 +4,6 @@ import TodoModal from "../Todo";
 
 const SortableItem = SortableElement((props) => (
   <TodoModal
-    todos={props.todos}
     todo={props.todo}
     index={props.indx}
     setTodoTitleHandler={props.setTodoTitleHandler}

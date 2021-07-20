@@ -37,12 +37,7 @@ const Note = (props) => {
                 placement="bottomRight"
                 trigger="click"
                 content={
-                  <PopoverNote
-                    noteId={props.id}
-                    noteTitle={props.title}
-                    noteTodos={props.todos}
-                    index={props.index}
-                  />
+                  <PopoverNote {...props} />
                 }
                 zIndex="999"
               >

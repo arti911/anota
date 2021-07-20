@@ -1,7 +1,7 @@
 import { Button, List, Checkbox, Popconfirm, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import DragHandle from "../../DragHandle";
 
@@ -9,12 +9,13 @@ import { checkTodo, removeTodo, toggleEdit } from "./todoSlice";
 
 const TodoModal = ({
   todo,
-  todos,
   index,
   setTodoTitleHandler,
   setCurrentTodoHandler
 }) => {
   const dispatch = useDispatch();
+
+  const todos = useSelector((state) => state.todo.todos);
 
   const edit = useCallback(() => {
     dispatch(toggleEdit(true));

@@ -1,15 +1,17 @@
-// import { forwardRef } from "react";
-import { SortableContainer } from "react-sortable-hoc";
-
 import { List } from "antd";
+import { SortableContainer } from "react-sortable-hoc";
+import { useSelector } from "react-redux";
+
 import SortableItem from "../SortableItem";
 
-const SortableList = SortableContainer((props) => (
+const SortableList = SortableContainer((props) => {
+  const todos = useSelector((state) => state.todo.todos);
+
+  return (
     <List
-      dataSource={props.todos}
+      dataSource={todos}
       renderItem={(item, index) => (
         <SortableItem
-          todos={props.todos}
           todo={item}
           indx={index}
           setTodoTitleHandler={props.setTodoTitleHandler}
@@ -20,6 +22,7 @@ const SortableList = SortableContainer((props) => (
         />
       )}
     />
-));
+  )
+});
 
 export default SortableList;
