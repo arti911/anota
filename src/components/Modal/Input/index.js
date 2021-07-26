@@ -9,6 +9,8 @@ import { saveTodo, saveEditTodo, toggleEdit } from "../Todo/todoSlice";
 
 import "./style.scss";
 
+const SEPARATOR = ";";
+
 const InputModal = (props) => {
   const dispatch = useDispatch();
 
@@ -21,11 +23,11 @@ const InputModal = (props) => {
     [props]
   );
 
-  const save = useCallback(() => {
+  const save = useCallback((todo = "", index = 0) => {
     const data = {
       ...DEFAULT_TODO,
-      id: Date.now(),
-      title: props.todoTitle
+      id: Date.now() + index,
+      title: todo === "" ? props.todoTitle.trim() : todo.trim(),
     };
 
     dispatch(saveTodo(data));
@@ -34,7 +36,7 @@ const InputModal = (props) => {
   const saveEdit = useCallback(() => {
     const data = {
       ...props.currentTodo,
-      title: props.todoTitle
+      title: props.todoTitle.trim()
     };
 
     dispatch(saveEditTodo(data));
@@ -45,7 +47,13 @@ const InputModal = (props) => {
       saveEdit();
       dispatch(toggleEdit(false));
     } else {
-      save()
+
+      if (props.todoTitle.includes(SEPARATOR)) {
+        props.todoTitle.trim().split(SEPARATOR).filter((item) => item.trim() !== "").map((item, index) => save(item, index));
+      } else {
+        save()
+      }
+
     }
 
     props.setTodoTitleHandler("");
@@ -58,7 +66,7 @@ const InputModal = (props) => {
   }, [props, dispatch]);
 
   return (
-    <Row className="anota-row" gutter={[16, 16]}>
+    <Row className="anota-row">
       <Input
         placeholder="Добавьте пункт"
         onChange={onChangeTodoTitle}

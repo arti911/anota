@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DragHandle from "../../DragHandle";
 
 import { checkTodo, removeTodo, toggleEdit } from "./todoSlice";
+import { SOLUTION } from "../Actions/constants";
 
 const TodoModal = ({
   todo,
@@ -37,8 +38,8 @@ const TodoModal = ({
     ></Button>,
     <Popconfirm
       title={`Удалить ${todo.title}?`}
-      okText="Да"
-      cancelText="Нет"
+      okText={SOLUTION.YES}
+      cancelText={SOLUTION.NO}
       onConfirm={confirm}
     >
       <Button shape="circle" icon={<DeleteOutlined />} danger={true}></Button>
@@ -49,7 +50,7 @@ const TodoModal = ({
     (event) => {
       dispatch(
         checkTodo({
-          index: index,
+          index,
           todo: {
             ...todos[index],
             isCheck: event.target.checked

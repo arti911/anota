@@ -1,19 +1,55 @@
 $parent: "note";
 
 .#{$parent} {
+  perspective: 800px;
+
   &__card {
     position: relative;
     height: 100%;
-    padding: 0 15px;
     align-content: flex-start;
+    box-shadow: 0px 10px 15px -15px #0f2431;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease;
+
+    &--flip {
+      transform: rotateY(180deg);
+
+      .#{$parent}__wrapper--front {
+        z-index: 98;
+      }
+
+      .#{$parent}__wrapper--back {
+        z-index: 99;
+      }
+    }
+  }
+
+  &__wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0 15px;
+    backface-visibility: hidden;
     background-color: #b5f4fa;
     border-radius: 6px;
-    box-shadow: 0px 10px 15px -15px #0f2431;
+
+    &--front {
+      z-index: 99;
+    }
+
+    &--back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateY(180deg);
+      z-index: 98;
+    }
 
     & > .ant-list {
       display: grid;
       grid-template-rows: auto 1fr auto;
-      height: 100%;
+      min-height: 100%;
     }
 
     & > * {
@@ -21,14 +57,24 @@ $parent: "note";
     }
   }
 
+  .ant-list-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+
+    div:last-of-type {
+      justify-self: flex-end;
+    }
+  }
+
   &:nth-child(even) {
-    & .#{$parent}__card {
+    & .#{$parent}__wrapper {
       background-color: #8dabe5;
     }
   }
 
   &:nth-child(3n) {
-    & .#{$parent}__card {
+    & .#{$parent}__wrapper {
       background-color: #b2b0e7;
     }
   }

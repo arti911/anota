@@ -31,3 +31,11 @@
     flex-wrap: nowrap;
   }
 }
+
+.ant-modal-content {
+  .ant-modal-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
