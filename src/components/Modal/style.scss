@@ -1,0 +1,11 @@
+.modal-list {
+  z-index: 1001;
+
+  &__item {
+    gap: 20px;
+
+    .ant-checkbox-wrapper {
+      width: 100%;
+    }
+  }
+}

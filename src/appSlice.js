@@ -16,9 +16,12 @@ const appSlice = createSlice({
     removeNote: (state, action) => {
       return state.filter((item) => item.id !== action.payload);
     },
+    saveNotesAfterSorting: (state, action) => {
+      return action.payload;
+    }
   },
 });
 
-export const { getNotes, saveNote, saveEditNote, removeNote } = appSlice.actions;
+export const { getNotes, saveNote, saveEditNote, removeNote, saveNotesAfterSorting } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -33,6 +33,9 @@ const todoSlice = createSlice({
     },
     cleatTodos: (state, action) => {
       state.todos.splice(0, state.todos.length);
+    },
+    sortTodos: (state, action) => {
+      state.todos = action.payload;
     }
   }
 });
@@ -44,7 +47,8 @@ export const {
   toggleEdit,
   saveEditTodo,
   editTodos,
-  cleatTodos
+  cleatTodos,
+  sortTodos
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
