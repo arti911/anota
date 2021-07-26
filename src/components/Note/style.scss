@@ -65,6 +65,10 @@ $parent: "note";
     div:last-of-type {
       justify-self: flex-end;
     }
+
+    & > * {
+      user-select: none;
+    }
   }
 
   &:nth-child(even) {
