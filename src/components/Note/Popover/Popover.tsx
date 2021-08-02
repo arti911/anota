@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import { removeNote } from "../../../appSlice";
+import { INote } from "../../../interfaces/Note/types";
 import { SOLUTION } from "../../Modal/Actions/constants";
 import {
   onToggleShow,
@@ -14,7 +15,7 @@ import { setVisibleNote } from "../noteSlice";
 
 const { Text } = Typography;
 
-const PopoverNote = (props) => {
+const PopoverNote = (props: INote) => {
   const dispatch = useDispatch();
 
   const confirm = useCallback(

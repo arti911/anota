@@ -6,6 +6,7 @@ import classname from "classnames";
 import PopoverNote from "./Popover";
 
 import "./style.scss";
+import { INote } from "../../interfaces/Note/types";
 
 const { Title } = Typography;
 
@@ -16,11 +17,11 @@ const ellipsisSetting = {
   symbol: <span></span>,
 };
 
-const Note = (props) => {
+const Note = (props: INote) => {
   const [ showNote, setShowNote ] = useState(!props.isVisibleNote);
   const [ height, setHeight ] = useState(0);
 
-  const cardContentRef = useRef(null);
+  const cardContentRef: any = useRef(null);
 
   const rootClass = classname("note__card", {
     "note__card--flip": showNote,
@@ -32,7 +33,7 @@ const Note = (props) => {
 
   
   useEffect(() => {
-    setHeight(cardContentRef.current.firstElementChild.offsetHeight);
+    setHeight(cardContentRef?.current?.firstElementChild.offsetHeight);
   }, []);
 
   return (
@@ -57,9 +58,9 @@ const Note = (props) => {
                   placement="bottomRight"
                   trigger="click"
                   content={
-                    <PopoverNote {...props} />
+                    <PopoverNote {...props} index={props.index} />
                   }
-                  zIndex="999"
+                  zIndex={999}
                 >
                   <Button type="text" icon={<EllipsisOutlined />}></Button>
                 </Popover>

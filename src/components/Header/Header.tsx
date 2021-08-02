@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux";
 import { Row, Col, Layout, Statistic } from "antd";
+
+import { useAppSelector } from "../../hook";
 
 import Logo from "../Logo";
 
 const { Header } = Layout;
 
 const HeaderAnota = () => {
-  const notes = useSelector((state) => state.anota);
+  const notes = useAppSelector((state) => state.anota.notes);
 
   return (
     <Header className="anota__header">

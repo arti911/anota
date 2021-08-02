@@ -5,22 +5,23 @@ import {
   DeleteOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 
 import { setVisibleNote } from "../../Note/noteSlice";
 import { checkTodo, sortTodos } from "../Todo/todoSlice";
 import { ACTION_TYPE, SOLUTION } from "./constants";
 
+import { useAppDispatch, useAppSelector } from "../../../hook";
+
 const { Text } = Typography;
 
 const Actions = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const todos = useSelector((state) => state.todo.todos);
-  const isVisibleNote = useSelector((state) => state.note.isVisibleNote);
+  const todos = useAppSelector((state) => state.todo.todos);
+  const isVisibleNote = useAppSelector((state) => state.note.isVisibleNote);
 
-  const [ actionType, setActionType ] = useState(null);
+  const [ actionType, setActionType ] = useState<string | null>(null);
 
   const isCompleted = todos.some((item) => item.isCheck);
 

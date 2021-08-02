@@ -1,22 +1,23 @@
 import { Button, List, Checkbox, Popconfirm, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../hook";
 
 import DragHandle from "../../DragHandle";
 
 import { checkTodo, removeTodo, toggleEdit } from "./todoSlice";
 import { SOLUTION } from "../Actions/constants";
+import { ISortTodo } from "../../../interfaces/Modal/types";
 
 const TodoModal = ({
   todo,
   index,
   setTodoTitleHandler,
   setCurrentTodoHandler
-}) => {
-  const dispatch = useDispatch();
+}: ISortTodo) => {
+  const dispatch = useAppDispatch();
 
-  const todos = useSelector((state) => state.todo.todos);
+  const todos = useAppSelector((state) => state.todo.todos);
 
   const edit = useCallback(() => {
     dispatch(toggleEdit(true));
@@ -48,6 +49,7 @@ const TodoModal = ({
 
   const onCheck = useCallback(
     (event) => {
+      console.log("==index", index);
       dispatch(
         checkTodo({
           index,

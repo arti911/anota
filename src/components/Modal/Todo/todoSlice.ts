@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ITodoState } from "../../../interfaces/Modal/types";
+
+const initialState: ITodoState = {
+  todos: [],
+  isEdit: false
+};
 
 const todoSlice = createSlice({
   name: "todo",
-  initialState: {
-    todos: [],
-    isEdit: false
-  },
+  initialState,
   reducers: {
     saveTodo: (state, action) => {
       state.todos.push(action.payload);
@@ -31,7 +34,7 @@ const todoSlice = createSlice({
     editTodos: (state, action) => {
       state.todos = state.todos.concat(action.payload);
     },
-    cleatTodos: (state, action) => {
+    cleatTodos: (state) => {
       state.todos.splice(0, state.todos.length);
     },
     sortTodos: (state, action) => {

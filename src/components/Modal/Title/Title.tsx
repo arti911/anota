@@ -1,11 +1,13 @@
 import { Typography } from "antd";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+
+import { useAppSelector } from "../../../hook";
+import { ITitle } from "../../../interfaces/Modal/types";
 
 const { Text } = Typography;
 
-const TitleModal = (props) => {
-  const title = useSelector((state) => state.modal.title);
+const TitleModal = (props: ITitle) => {
+  const title = useAppSelector((state) => state.modal.title);
 
   useEffect(() => {
     props.setTitleHandler(title);
