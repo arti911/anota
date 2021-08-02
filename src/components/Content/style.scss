@@ -1,0 +1,12 @@
+$parent: anota-main;
+
+.#{anota-main} {
+  position: relative;
+  padding: 20px;
+
+  &__sort-list {
+    .note__card {
+      transform: rotate(-1.5deg);
+    }
+  }
+}

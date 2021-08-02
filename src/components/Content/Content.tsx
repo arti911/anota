@@ -2,13 +2,17 @@ import { Layout, Button, Row, Col } from "antd";
 import { EditFilled } from "@ant-design/icons";
 import arrayMove from "array-move";
 
+import { SortableItem, SortableList } from "../Sortable/Sortable";
 import Note from "../Note";
 
 import { onToggleShow } from "../Modal/modalSlice";
 import { saveNotesAfterSorting } from "../../appSlice";
+
 import { useAppDispatch, useAppSelector } from "../../hook";
+
 import { ISort } from "../../interfaces/Note/types";
-import { SortableItem, SortableList } from "../Sortable/Sortable";
+
+import "./style.scss";
 
 const { Content } = Layout;
 
@@ -23,11 +27,12 @@ const ContentAnota = () => {
   };
 
   return (
-    <Content className="anota__main">
+    <Content className="anota-main">
       <Row gutter={[16, 24]}>
         <SortableList
           axis="xy"
           pressDelay={205}
+          helperClass="anota-main__sort-list"
           onSortEnd={onSortEnd}
           useWindowAsScrollContainer={true}
         >
