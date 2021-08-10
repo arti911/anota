@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/anota/static/css/main.7d1230f1.chunk.css",
+    "main.css": "/anota/static/css/main.a216985b.chunk.css",
     "main.js": "/anota/static/js/main.bc5816c0.chunk.js",
     "main.js.map": "/anota/static/js/main.bc5816c0.chunk.js.map",
     "runtime-main.js": "/anota/static/js/runtime-main.080330f2.js",
     "runtime-main.js.map": "/anota/static/js/runtime-main.080330f2.js.map",
-    "static/css/2.a01b382c.chunk.css": "/anota/static/css/2.a01b382c.chunk.css",
+    "static/css/2.8471cb7f.chunk.css": "/anota/static/css/2.8471cb7f.chunk.css",
     "static/js/2.03ed8204.chunk.js": "/anota/static/js/2.03ed8204.chunk.js",
     "static/js/2.03ed8204.chunk.js.map": "/anota/static/js/2.03ed8204.chunk.js.map",
     "static/js/3.c683facd.chunk.js": "/anota/static/js/3.c683facd.chunk.js",
@@ -13,15 +13,15 @@
     "index.html": "/anota/index.html",
     "service-worker.js": "/anota/service-worker.js",
     "service-worker.js.map": "/anota/service-worker.js.map",
-    "static/css/2.a01b382c.chunk.css.map": "/anota/static/css/2.a01b382c.chunk.css.map",
-    "static/css/main.7d1230f1.chunk.css.map": "/anota/static/css/main.7d1230f1.chunk.css.map",
+    "static/css/2.8471cb7f.chunk.css.map": "/anota/static/css/2.8471cb7f.chunk.css.map",
+    "static/css/main.a216985b.chunk.css.map": "/anota/static/css/main.a216985b.chunk.css.map",
     "static/js/2.03ed8204.chunk.js.LICENSE.txt": "/anota/static/js/2.03ed8204.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.080330f2.js",
-    "static/css/2.a01b382c.chunk.css",
+    "static/css/2.8471cb7f.chunk.css",
     "static/js/2.03ed8204.chunk.js",
-    "static/css/main.7d1230f1.chunk.css",
+    "static/css/main.a216985b.chunk.css",
     "static/js/main.bc5816c0.chunk.js"
   ]
 }
