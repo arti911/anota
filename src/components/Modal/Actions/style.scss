@@ -1,0 +1,11 @@
+$parent: actions;
+
+.#{$parent} {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 15px;
+
+  &__item {
+    text-align: center;
+  }
+}

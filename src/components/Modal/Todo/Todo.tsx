@@ -49,7 +49,6 @@ const TodoModal = ({
 
   const onCheck = useCallback(
     (event) => {
-      console.log("==index", index);
       dispatch(
         checkTodo({
           index,

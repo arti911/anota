@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { List, Modal, message } from "antd";
+import { List, Modal, message, Empty } from "antd";
 import arrayMove from "array-move";
 import ReactDOM from "react-dom";
 
@@ -96,7 +96,7 @@ const AddModal = () => {
         setTodoTitleHandler={setTodoTitle}
         setCurrentTodoHandler={setCurrentTodo}
       />
-      {todos.length > 0 && (
+      {todos.length > 0 ? (
         <SortableList
           onSortEnd={onSortEnd}
           useDragHandle
@@ -119,10 +119,13 @@ const AddModal = () => {
                 />
               </SortableItem>
             )}
+            bordered={true}
+            footer={<Actions />}
           />
         </SortableList>
-      )}
-      <Actions />
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      ) }
     </Modal>
   );
 };
