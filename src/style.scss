@@ -18,6 +18,8 @@
 }
 
 .ant-list-item {
+  overflow: auto;
+
   @media screen and (max-width: 576px) {
     flex-wrap: nowrap;
   }

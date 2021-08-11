@@ -78,7 +78,10 @@ const AddModal = () => {
     }
   }, [ dispatch, save, saveEdit, todos, currentNoteIndex ]);
 
-  const onSortEnd = ({ oldIndex, newIndex }: ISort) => dispatch(sortTodos(arrayMove(todos, oldIndex, newIndex)));
+  const onSortEnd = ({ oldIndex, newIndex }: ISort) => {
+    const newTodos = arrayMove(todos, oldIndex, newIndex);
+    dispatch(sortTodos(newTodos));
+  };
 
   return (
     <Modal
@@ -108,7 +111,7 @@ const AddModal = () => {
             renderItem={(item, index) => (
               <SortableItem
                 index={index}
-                key={item.id + index}
+                key={item.id}
                 ref={itemListRef}
               >
                 <TodoModal
@@ -119,7 +122,6 @@ const AddModal = () => {
                 />
               </SortableItem>
             )}
-            bordered={true}
             footer={<Actions />}
           />
         </SortableList>
