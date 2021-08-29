@@ -1,18 +1,22 @@
 import { Input, Button, Row } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import { DEFAULT_TODO } from "../../../constants";
 
 import { saveTodo, saveEditTodo, toggleEdit } from "../Todo/todoSlice";
+import { useAppDispatch, useAppSelector } from "../../../hook";
 
 import "./style.scss";
 
-const InputModal = (props) => {
-  const dispatch = useDispatch();
+import { ITodoCurrent } from "../../../interfaces/Modal/types";
 
-  const isEdit = useSelector((state) => state.todo.isEdit);
+const SEPARATOR = ";";
+
+const InputModal = (props: ITodoCurrent) => {
+  const dispatch = useAppDispatch();
+
+  const isEdit = useAppSelector((state) => state.todo.isEdit);
 
   const onChangeTodoTitle = useCallback(
     ({ target }) => {
@@ -21,35 +25,40 @@ const InputModal = (props) => {
     [props]
   );
 
-  const save = useCallback(() => {
+  const save = useCallback((todo: string = "", index: number = 0) => {
     const data = {
       ...DEFAULT_TODO,
-      id: Date.now(),
-      title: props.todoTitle
+      id: Date.now() + index,
+      title: todo.trim(),
     };
 
     dispatch(saveTodo(data));
-  }, [ dispatch, props ]);
+  }, [ dispatch ]);
 
   const saveEdit = useCallback(() => {
     const data = {
       ...props.currentTodo,
-      title: props.todoTitle
+      title: props.todoTitle.trim()
     };
 
     dispatch(saveEditTodo(data));
   }, [ dispatch, props ]);
 
-  const onSaveTodo = useCallback(() => {
-    if (isEdit) {
-      saveEdit();
-      dispatch(toggleEdit(false));
-    } else {
-      save()
-    }
-
+  const onSaveEditinTodo = useCallback(() => {
+    saveEdit();
+    dispatch(toggleEdit(false));
     props.setTodoTitleHandler("");
-  }, [props, isEdit, dispatch, save, saveEdit]);
+  }, [ props, saveEdit, dispatch ]);
+
+  const onSaveTodo = useCallback(() => {
+    props.todoTitle
+      .trim()
+      .split(SEPARATOR)
+      .filter((item) => item.trim() !== "")
+      .map((item, index) => save(item, index));
+
+      props.setTodoTitleHandler("");
+  }, [ props, save ]);
 
   const onClose = useCallback(() => {
     props.setTodoTitleHandler("");
@@ -58,7 +67,7 @@ const InputModal = (props) => {
   }, [props, dispatch]);
 
   return (
-    <Row className="anota-row" gutter={[16, 16]}>
+    <Row className="anota-row">
       <Input
         placeholder="Добавьте пункт"
         onChange={onChangeTodoTitle}
@@ -67,7 +76,7 @@ const InputModal = (props) => {
       <Button
         type="primary"
         disabled={props.todoTitle.length === 0}
-        onClick={onSaveTodo}
+        onClick={isEdit ? onSaveEditinTodo : onSaveTodo}
       >
         {isEdit ? "Сохранить изменения" : "Добавить"}
       </Button>

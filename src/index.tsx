@@ -16,7 +16,7 @@ import { getNotes } from "./appSlice";
 store.subscribe(() => {
   const data = {
     notes: {
-      lists: get(store.getState(), "anota", "")
+      lists: get(store.getState(), "anota.notes", [])
     }
   };
 

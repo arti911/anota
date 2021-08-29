@@ -1,6 +1,6 @@
 import { get } from "lodash";
 
-export const fetchNotes = (key) => {
+export const fetchNotes = () => {
   try {
     const response = localStorage.getItem("vuex");
 

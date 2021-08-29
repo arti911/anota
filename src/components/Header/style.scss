@@ -1,0 +1,13 @@
+$parent: anota-header;
+
+.#{$parent} {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9;
+  padding: 6px 20px;
+  background-color: #f0f2f5;
+  line-height: normal;
+}

@@ -1,23 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { INotes } from "./interfaces/App/types";
+
+
+const initialState: INotes = {
+  notes: [],
+}
 
 const appSlice = createSlice({
   name: "app",
-  initialState: [],
+  initialState,
   reducers: {
     getNotes: (state, action) => {
-      return action.payload;
+      state.notes = action.payload;
     },
     saveNote: (state, action) => {
-      state.push(action.payload);
+      state.notes.push(action.payload);
     },
     saveEditNote: (state, action) => {
-      state.splice(action.payload.index, 1, action.payload.note);
+      state.notes.splice(action.payload.index, 1, action.payload.note);
     },
     removeNote: (state, action) => {
-      return state.filter((item) => item.id !== action.payload);
+      const index = state.notes.findIndex((item) => item.id === action.payload);
+      state.notes.splice(index, 1);
     },
     saveNotesAfterSorting: (state, action) => {
-      return action.payload;
+      state.notes = action.payload;
     }
   },
 });

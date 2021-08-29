@@ -4,15 +4,6 @@
   min-height: -webkit-fill-available;
   text-align: center;
 
-  &__header {
-    background: transparent;
-  }
-
-  &__main {
-    position: relative;
-    padding: 20px;
-  }
-
   &__btn-add-note {
     position: fixed;
     left: 50%;
@@ -27,7 +18,26 @@
 }
 
 .ant-list-item {
+  overflow: auto;
+
   @media screen and (max-width: 576px) {
     flex-wrap: nowrap;
+  }
+}
+
+.ant-modal-content {
+  .ant-modal-body {
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 20px;
+  }
+}
+
+.ant-typography-copy {
+  margin-left: 0;
+  color: #fff;
+  
+  &:hover {
+    color: #fff;
   }
 }

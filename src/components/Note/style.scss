@@ -1,19 +1,54 @@
 $parent: "note";
 
 .#{$parent} {
+  perspective: 800px;
+
   &__card {
     position: relative;
     height: 100%;
-    padding: 0 15px;
     align-content: flex-start;
-    background-color: #b5f4fa;
-    border-radius: 6px;
     box-shadow: 0px 10px 15px -15px #0f2431;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease;
+
+    &--flip {
+      transform: rotateY(180deg);
+
+      .#{$parent}__wrapper--front {
+        z-index: 98;
+      }
+
+      .#{$parent}__wrapper--back {
+        z-index: 99;
+      }
+    }
+  }
+
+  &__wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0 15px;
+    backface-visibility: hidden;
+    border-radius: 6px;
+
+    &--front {
+      z-index: 99;
+    }
+
+    &--back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateY(180deg);
+      z-index: 98;
+    }
 
     & > .ant-list {
       display: grid;
       grid-template-rows: auto 1fr auto;
-      height: 100%;
+      min-height: 100%;
     }
 
     & > * {
@@ -21,15 +56,41 @@ $parent: "note";
     }
   }
 
-  &:nth-child(even) {
-    & .#{$parent}__card {
-      background-color: #8dabe5;
+  .ant-list-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+
+    div:last-of-type {
+      justify-self: flex-end;
+    }
+
+    & > * {
+      user-select: none;
     }
   }
 
-  &:nth-child(3n) {
-    & .#{$parent}__card {
-      background-color: #b2b0e7;
+  &:nth-child(n + 4) {
+    & .#{$parent}__wrapper {
+      background-image: linear-gradient(to top left, #b5f4fa, #8dabe5);
+    }
+  }
+  
+  &:nth-child(1) {
+    & .#{$parent}__wrapper {
+      background-image: linear-gradient(to top right, #b5f4fa, #b2b0e7);
+    }
+  }
+  
+  &:nth-child(2) {
+    & .#{$parent}__wrapper {
+      background-image: linear-gradient(to top right, #8dabe5, #b5f4fa);
+    }
+  }
+  
+  &:nth-child(3) {
+    & .#{$parent}__wrapper {
+      background-image: linear-gradient(to top left, #8dabe5, #B2B0E6);
     }
   }
 }

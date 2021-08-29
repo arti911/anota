@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { IState } from "../../interfaces/Modal/types";
+
+const initialState: IState = {
+  visibleModal: false,
+  title: "Новая заметка",
+  currentNoteIndex: null
+}
+
 const modalSlice = createSlice({
   name: "modal",
-  initialState: {
-    visibleModal: false,
-    title: "Новая заметка",
-    currentNoteIndex: null
-  },
+  initialState,
   reducers: {
     onToggleShow: (state, action) => {
       state.visibleModal = action.payload;
