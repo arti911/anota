@@ -8,7 +8,7 @@ import { SOLUTION } from "../../Modal/Actions/constants";
 import {
   onToggleShow,
   setTitleEdit,
-  setCurrentNoteIndex
+  setCurrentNoteId
 } from "../../Modal/modalSlice";
 import { editTodos } from "../../Modal/Todo/todoSlice";
 import { setVisibleNote } from "../noteSlice";
@@ -27,7 +27,7 @@ const PopoverNote = (props: INote) => {
     dispatch(editTodos(props.todos));
     dispatch(setTitleEdit(props.title));
     dispatch(onToggleShow(true));
-    dispatch(setCurrentNoteIndex(props.index));
+    dispatch(setCurrentNoteId(props.id));
     dispatch(setVisibleNote(props.isVisibleNote));
   }, [dispatch, props]);
 

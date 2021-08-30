@@ -10,7 +10,7 @@ import InputModal from "./Input";
 import Actions from "./Actions";
 
 import { saveNote, saveEditNote } from "../../appSlice";
-import { onToggleShow, setCurrentNoteIndex, setTitleEdit } from "./modalSlice";
+import { onToggleShow, setCurrentNoteId, setTitleEdit } from "./modalSlice";
 import { cleatTodos, sortTodos } from "./Todo/todoSlice";
 import { useAppSelector, useAppDispatch } from "../../hook";
 
@@ -24,7 +24,7 @@ const AddModal = () => {
   const dispatch = useAppDispatch();
   const visible = useAppSelector((state) => state.modal.visibleModal);
   const todos = useAppSelector((state) => state.todo.todos);
-  const currentNoteIndex = useAppSelector((state) => state.modal.currentNoteIndex);
+  const currentNoteId = useAppSelector((state) => state.modal.currentNoteId);
   const isVisibleNote = useAppSelector((state) => state.note.isVisibleNote);
 
   const [localTitle, setLocalTitle] = useState<string>("");
@@ -34,12 +34,12 @@ const AddModal = () => {
   const onCancel = () => {
     dispatch(onToggleShow(false));
     dispatch(cleatTodos());
-    dispatch(setCurrentNoteIndex(null));
+    dispatch(setCurrentNoteId(null));
     dispatch(setTitleEdit("Новая заметка"));
     setTodoTitle("");
   };
 
-  const saveEdit = useCallback((index: number | null) => {
+  const saveEdit = useCallback((idNote: number | null) => {
       const data = {
         note: {
           id: Date.now(),
@@ -47,11 +47,11 @@ const AddModal = () => {
           todos,
           isVisibleNote,
         },
-        index
+        idNote
       };
 
       dispatch(saveEditNote(data));
-      dispatch(setCurrentNoteIndex(null));
+      dispatch(setCurrentNoteId(null));
     }, [ dispatch, localTitle, todos, isVisibleNote ]);
 
   const save = useCallback(() => {
@@ -67,7 +67,7 @@ const AddModal = () => {
 
   const onSaveNote = useCallback(() => {
     if (todos.length > 0) {
-      Number.isFinite(currentNoteIndex) ? saveEdit(currentNoteIndex) : save();
+      Number.isFinite(currentNoteId) ? saveEdit(currentNoteId) : save();
 
       dispatch(onToggleShow(false));
       dispatch(setTitleEdit("Новая заметка"));
@@ -76,7 +76,7 @@ const AddModal = () => {
     } else {
       message.warning("Добавьте контент в заметку!");
     }
-  }, [ dispatch, save, saveEdit, todos, currentNoteIndex ]);
+  }, [ dispatch, save, saveEdit, todos, currentNoteId ]);
 
   const onSortEnd = ({ oldIndex, newIndex }: ISort) => {
     const newTodos = arrayMove(todos, oldIndex, newIndex);

@@ -1,7 +1,7 @@
 export interface IState {
   visibleModal: boolean;
   title: string;
-  currentNoteIndex: number | null;
+  currentNoteId: number | null;
 }
 
 export interface ITitle {
