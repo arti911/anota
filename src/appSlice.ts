@@ -4,6 +4,10 @@ import { INotes } from "./interfaces/App/types";
 
 const initialState: INotes = {
   notes: [],
+  search: {
+    notes: [],
+    value: ""
+  },
 }
 
 const appSlice = createSlice({
@@ -17,7 +21,9 @@ const appSlice = createSlice({
       state.notes.push(action.payload);
     },
     saveEditNote: (state, action) => {
-      state.notes.splice(action.payload.index, 1, action.payload.note);
+      const { note, index } = action.payload;
+
+      state.notes.splice(index, 1, note);
     },
     removeNote: (state, action) => {
       const index = state.notes.findIndex((item) => item.id === action.payload);
@@ -25,10 +31,23 @@ const appSlice = createSlice({
     },
     saveNotesAfterSorting: (state, action) => {
       state.notes = action.payload;
+    },
+    setSearch: (state, action) => {
+      state.search = {
+        ...state.search,
+        ...action.payload
+      };
     }
   },
 });
 
-export const { getNotes, saveNote, saveEditNote, removeNote, saveNotesAfterSorting } = appSlice.actions;
+export const {
+  getNotes,
+  saveNote,
+  saveEditNote,
+  removeNote,
+  saveNotesAfterSorting,
+  setSearch,
+} = appSlice.actions;
 
 export default appSlice.reducer;
