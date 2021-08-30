@@ -1,6 +1,14 @@
 $parent: anota-header;
 
 .#{$parent} {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr auto;
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas:
+  "logo . . . count"
+  "search search search search search";
+  gap: 15px;
+  align-items: center;
   position: sticky;
   top: 0;
   left: 0;
@@ -10,4 +18,34 @@ $parent: anota-header;
   padding: 6px 20px;
   background-color: #f0f2f5;
   line-height: normal;
+  
+  @media (min-width: 768px) {
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "logo search search search count";
+    gap: 35px;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-areas: 
+      "logo . search search count";
+  }
+
+  &__logo {
+    justify-self: flex-start;
+    grid-area: logo;
+  }
+
+  &__search {
+    grid-area: search;
+
+    .ant-input-affix-wrapper {
+      border-radius: 6px;
+    }
+  }
+
+  &__count {
+    justify-self: flex-end;
+    grid-area: count;
+  }
 }
