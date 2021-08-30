@@ -21,7 +21,9 @@ const appSlice = createSlice({
       state.notes.push(action.payload);
     },
     saveEditNote: (state, action) => {
-      const { note, index } = action.payload;
+      const { note, idNote } = action.payload;
+
+      const index = state.notes.findIndex((item) => item.id === idNote);
 
       state.notes.splice(index, 1, note);
     },
