@@ -58,7 +58,7 @@ const Note = (props: INote) => {
                   placement="bottomRight"
                   trigger="click"
                   content={
-                    <PopoverNote {...props} index={props.index} />
+                    <PopoverNote {...props} />
                   }
                   zIndex={999}
                 >

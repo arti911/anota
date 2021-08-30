@@ -5,7 +5,7 @@ import { IState } from "../../interfaces/Modal/types";
 const initialState: IState = {
   visibleModal: false,
   title: "Новая заметка",
-  currentNoteIndex: null
+  currentNoteId: null,
 }
 
 const modalSlice = createSlice({
@@ -18,8 +18,8 @@ const modalSlice = createSlice({
     setTitleEdit: (state, action) => {
       state.title = action.payload;
     },
-    setCurrentNoteIndex: (state, action) => {
-      state.currentNoteIndex = action.payload;
+    setCurrentNoteId: (state, action) => {
+      state.currentNoteId = action.payload;
     }
   }
 });
@@ -27,7 +27,7 @@ const modalSlice = createSlice({
 export const {
   onToggleShow,
   setTitleEdit,
-  setCurrentNoteIndex
+  setCurrentNoteId
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

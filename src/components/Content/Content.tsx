@@ -33,7 +33,7 @@ const ContentAnota = () => {
         {search.notes.length > 0
           ? (search.notes.map((item, index) => (
             <Col key={item.id} className="note" xs={24} sm={24} md={12} lg={8} xl={6}>
-              <Note index={index} {...item} />
+              <Note {...item} />
             </Col>
           )))
           : search.value !== "" && search.notes.length === 0
@@ -50,7 +50,7 @@ const ContentAnota = () => {
                 {notes.map((item, index) => (
                   <SortableItem key={item.id} index={index}>
                     <Col className="note" xs={24} sm={24} md={12} lg={8} xl={6}>
-                      <Note index={index} {...item} />
+                      <Note {...item} />
                     </Col>
                   </SortableItem>
                 ))}

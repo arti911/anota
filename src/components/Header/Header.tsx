@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback } from "react";
+import { SyntheticEvent, useCallback, useEffect } from "react";
 import { Layout, Statistic, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -28,6 +28,15 @@ const HeaderAnota = () => {
       value: element.value
     }));
   }, [ dispatch, notes ]);
+
+  useEffect(() => {
+    const searchNotes = searchNotesFn(notes, search.value);
+
+    dispatch(setSearch({
+      notes: search.value === "" ? [] : searchNotes,
+      value: search.value
+    }));
+  }, [ notes ])
 
   const countNotes = search.notes.length > 0
     ? search.notes.length
