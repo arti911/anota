@@ -1,6 +1,7 @@
 import { SyntheticEvent, useCallback, useEffect } from "react";
 import { Layout, Statistic, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { debounce } from "lodash";
 
 import { useAppDispatch, useAppSelector } from "../../hook";
 
@@ -50,7 +51,7 @@ const HeaderAnota = () => {
         <Logo />
       </div>
       <div className="anota-header__item anota-header__search">
-        <Input size="large" placeholder="search" prefix={<SearchOutlined />} allowClear onChange={onSearch} />
+        <Input size="large" placeholder="search" prefix={<SearchOutlined />} allowClear onChange={debounce(onSearch, 300)} />
       </div>
       <div className="anota-header__item anota-header__count">
         <Statistic
