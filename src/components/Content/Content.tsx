@@ -1,16 +1,16 @@
 import { Layout, Button, Row, Col, Empty } from "antd";
 import { EditFilled } from "@ant-design/icons";
-import arrayMove from "array-move";
+import { arrayMove } from "react-sortable-hoc";
 
 import { SortableItem, SortableList } from "../Sortable/Sortable";
 import Note from "../Note";
 
-import { onToggleShow } from "../Modal/modalSlice";
-import { saveNotesAfterSorting } from "../../appSlice";
+import { onToggleShow } from "../../slices/modalSlice";
+import { saveNotesAfterSorting } from "../../slices/appSlice";
 
 import { useAppDispatch, useAppSelector } from "../../hook";
 
-import { ISort } from "../../interfaces/Note/types";
+import { ISort } from "../Note/interface";
 
 import "./style.scss";
 
@@ -18,8 +18,8 @@ const { Content } = Layout;
 
 const ContentAnota = () => {
   const dispatch = useAppDispatch();
-  const notes = useAppSelector((state) => state.anota.notes);
-  const search = useAppSelector((state) => state.anota.search);
+
+  const { notes, search } = useAppSelector((state) => state.anota);
 
   const onShowModal = () => dispatch(onToggleShow(true));
 

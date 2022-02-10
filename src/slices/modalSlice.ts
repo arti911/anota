@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { IState } from "../../interfaces/Modal/types";
+import { IState } from "../interfaces/modal.interface";
 
 const initialState: IState = {
   visibleModal: false,
@@ -12,13 +12,13 @@ const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    onToggleShow: (state, action) => {
+    onToggleShow: (state, action: PayloadAction<boolean>) => {
       state.visibleModal = action.payload;
     },
-    setTitleEdit: (state, action) => {
+    setTitleEdit: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
-    setCurrentNoteId: (state, action) => {
+    setCurrentNoteId: (state, action: PayloadAction<number | null>) => {
       state.currentNoteId = action.payload;
     }
   }

@@ -1,31 +1,31 @@
 import { useCallback, useRef, useState } from "react";
 import { List, Modal, message, Empty } from "antd";
-import arrayMove from "array-move";
+import { arrayMove } from "react-sortable-hoc";
 import ReactDOM from "react-dom";
 
-import TitleModal from "./Title";
-import TodoModal from "./Todo";
+import TitleModal from "../Title";
+import TodoModal from "../Todo";
 import { SortableList, SortableItem } from "../Sortable/Sortable";
-import InputModal from "./Input";
-import Actions from "./Actions";
+import InputModal from "../Input";
+import Actions from "../Actions";
 
-import { saveNote, saveEditNote } from "../../appSlice";
-import { onToggleShow, setCurrentNoteId, setTitleEdit } from "./modalSlice";
-import { cleatTodos, sortTodos } from "./Todo/todoSlice";
+import { saveNote, saveEditNote } from "../../slices/appSlice";
+import { onToggleShow, setCurrentNoteId, setTitleEdit } from "../../slices/modalSlice";
+import { cleatTodos, sortTodos } from "../../slices/todoSlice";
 import { useAppSelector, useAppDispatch } from "../../hook";
 
 import "./style.scss";
-import { ISort } from "../../interfaces/Note/types";
-import { ITodo } from "../../interfaces/Modal/types";
+import { ISort } from "../Note/interface";
+import { ITodo } from "../../interfaces/modal.interface";
 
 const AddModal = () => {
   const itemListRef: any = useRef(null);
 
   const dispatch = useAppDispatch();
-  const visible = useAppSelector((state) => state.modal.visibleModal);
-  const todos = useAppSelector((state) => state.todo.todos);
-  const currentNoteId = useAppSelector((state) => state.modal.currentNoteId);
-  const isVisibleNote = useAppSelector((state) => state.note.isVisibleNote);
+
+  const { visibleModal, currentNoteId } = useAppSelector((state) => state.modal);
+  const { todos } = useAppSelector((state) => state.todo);
+  const { isVisibleNote } = useAppSelector((state) => state.note);
 
   const [localTitle, setLocalTitle] = useState<string>("");
   const [currentTodo, setCurrentTodo] = useState<ITodo | null>(null);
@@ -83,11 +83,17 @@ const AddModal = () => {
     dispatch(sortTodos(newTodos));
   };
 
+  const handlers = {
+    setLocalTitle,
+    setTodoTitle,
+    setCurrentTodo,
+  };
+
   return (
     <Modal
-      title={<TitleModal title={localTitle} setTitleHandler={setLocalTitle} />}
+      title={<TitleModal title={localTitle} handlers={handlers} />}
       style={{ top: 20 }}
-      visible={visible}
+      visible={visibleModal}
       cancelText={<></>}
       destroyOnClose={true}
       onOk={onSaveNote}
@@ -96,8 +102,7 @@ const AddModal = () => {
       <InputModal
         todoTitle={todoTitle}
         currentTodo={currentTodo}
-        setTodoTitleHandler={setTodoTitle}
-        setCurrentTodoHandler={setCurrentTodo}
+        handlers={handlers}
       />
       {todos.length > 0 ? (
         <SortableList
@@ -117,8 +122,7 @@ const AddModal = () => {
                 <TodoModal
                   todo={item}
                   index={index}
-                  setTodoTitleHandler={setTodoTitle}
-                  setCurrentTodoHandler={setCurrentTodo}
+                  handlers={handlers}
                 />
               </SortableItem>
             )}

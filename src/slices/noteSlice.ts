@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const noteSlice = createSlice({
   name: "note",
@@ -6,7 +6,7 @@ const noteSlice = createSlice({
     isVisibleNote: true,
   },
   reducers: {
-    setVisibleNote: (state, action) => {
+    setVisibleNote: (state, action: PayloadAction<boolean | undefined>) => {
       state.isVisibleNote = (action.payload === undefined) ? true : action.payload;
     },
   },

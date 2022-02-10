@@ -1,31 +1,30 @@
 import { Input, Button, Row } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { useCallback } from "react";
+import { SyntheticEvent } from "react";
 
-import { DEFAULT_TODO } from "../../../constants";
+import { DEFAULT_TODO } from "../../constants";
 
-import { saveTodo, saveEditTodo, toggleEdit } from "../Todo/todoSlice";
-import { useAppDispatch, useAppSelector } from "../../../hook";
+import { saveTodo, saveEditTodo, toggleEdit } from "../../slices/todoSlice";
+import { useAppDispatch, useAppSelector } from "../../hook";
 
 import "./style.scss";
 
-import { ITodoCurrent } from "../../../interfaces/Modal/types";
+import { ITodoCurrent } from "../../interfaces/modal.interface";
 
 const SEPARATOR = ";";
 
 const InputModal = (props: ITodoCurrent) => {
   const dispatch = useAppDispatch();
 
-  const isEdit = useAppSelector((state) => state.todo.isEdit);
+  const { isEdit } = useAppSelector((state) => state.todo);
 
-  const onChangeTodoTitle = useCallback(
-    ({ target }) => {
-      props.setTodoTitleHandler(target.value);
-    },
-    [props]
-  );
+  const onChangeTodoTitle = (event: SyntheticEvent) => {
+    const element = event.target as HTMLInputElement;  
 
-  const save = useCallback((todo: string = "", index: number = 0) => {
+    props.handlers.setTodoTitle(element.value);
+  };
+
+  const save = (todo: string = "", index: number = 0) => {
     const data = {
       ...DEFAULT_TODO,
       id: Date.now() + index,
@@ -33,38 +32,40 @@ const InputModal = (props: ITodoCurrent) => {
     };
 
     dispatch(saveTodo(data));
-  }, [ dispatch ]);
+  };
 
-  const saveEdit = useCallback(() => {
-    const data = {
-      ...props.currentTodo,
-      title: props.todoTitle.trim()
-    };
+  const saveEdit = () => {
+    if (props.currentTodo !== null) {
+      const data = {
+        ...props.currentTodo,
+        title: props.todoTitle.trim()
+      };
+  
+      dispatch(saveEditTodo(data));
+    }
+  };
 
-    dispatch(saveEditTodo(data));
-  }, [ dispatch, props ]);
-
-  const onSaveEditinTodo = useCallback(() => {
+  const onSaveEditinTodo = () => {
     saveEdit();
     dispatch(toggleEdit(false));
-    props.setTodoTitleHandler("");
-  }, [ props, saveEdit, dispatch ]);
+    props.handlers.setTodoTitle("");
+  };
 
-  const onSaveTodo = useCallback(() => {
+  const onSaveTodo = () => {
     props.todoTitle
       .trim()
       .split(SEPARATOR)
       .filter((item) => item.trim() !== "")
       .map((item, index) => save(item, index));
 
-      props.setTodoTitleHandler("");
-  }, [ props, save ]);
+      props.handlers.setTodoTitle("");
+  };
 
-  const onClose = useCallback(() => {
-    props.setTodoTitleHandler("");
-    props.setCurrentTodoHandler(null);
+  const onClose = () => {
+    props.handlers.setTodoTitle("");
+    props.handlers.setCurrentTodo(null);
     dispatch(toggleEdit(false));
-  }, [props, dispatch]);
+  };
 
   return (
     <Row className="anota-row">

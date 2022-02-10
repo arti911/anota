@@ -1,4 +1,4 @@
-import { ITodo } from "../Modal/types";
+import { ITodo } from "../../interfaces/modal.interface";
 
 export interface INote {
   id: number;

@@ -1,7 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { ITodoState } from "../../../interfaces/Modal/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: ITodoState = {
+import { ITodos } from "../interfaces/interface";
+import { ITodo } from "../interfaces/modal.interface";
+
+const initialState: ITodos = {
   todos: [],
   isEdit: false
 };
@@ -10,34 +12,38 @@ const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
-    saveTodo: (state, action) => {
+    saveTodo: (state, action: PayloadAction<ITodo>) => {
       state.todos.push(action.payload);
     },
-    checkTodo: (state, action) => {
+    checkTodo: (state, action: PayloadAction<{
+      index: number;
+      todo: ITodo;
+    }>) => {
       const { index, todo } = action.payload;
 
       state.todos.splice(index, 1, todo);
     },
-    removeTodo: (state, action) => {
+    removeTodo: (state, action: PayloadAction<number>) => {
       state.todos.splice(action.payload, 1);
     },
-    toggleEdit: (state, action) => {
+    toggleEdit: (state, action: PayloadAction<boolean>) => {
       state.isEdit = action.payload;
     },
-    saveEditTodo: (state, action) => {
+    saveEditTodo: (state: ITodos, action: PayloadAction<ITodo>) => {
       const itemIndex = state.todos.findIndex(
         (item) => item.id === action.payload.id
       );
 
       state.todos.splice(itemIndex, 1, action.payload);
+
     },
-    editTodos: (state, action) => {
+    editTodos: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = state.todos.concat(action.payload);
     },
     cleatTodos: (state) => {
       state.todos.splice(0, state.todos.length);
     },
-    sortTodos: (state, action) => {
+    sortTodos: (state, action: PayloadAction<ITodo[]>) => {
       state.todos = action.payload;
     }
   }
