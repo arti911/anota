@@ -1,53 +1,17 @@
-import { Button, Popconfirm, Typography } from "antd";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { Button, Popover } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 
-import { removeNote } from "../../../appSlice";
-import { INote } from "../../../interfaces/Note/types";
-import { SOLUTION } from "../../Modal/Actions/constants";
-import {
-  onToggleShow,
-  setTitleEdit,
-  setCurrentNoteId
-} from "../../Modal/modalSlice";
-import { editTodos } from "../../Modal/Todo/todoSlice";
-import { setVisibleNote } from "../noteSlice";
+import PopoverContent from "../../PopoverContent";
 
-const { Text } = Typography;
+const PopoverAnota = (props: any) => (
+  <Popover
+    placement={props.placement}
+    trigger={props.trigger}
+    zIndex={props.zIndex}
+    content={<PopoverContent {...props.content} />}
+  >
+    <Button type="text" icon={<EllipsisOutlined />}></Button>
+  </Popover>
+);
 
-const PopoverNote = (props: INote) => {
-  const dispatch = useDispatch();
-
-  const confirm = useCallback(
-    () => dispatch(removeNote(props.id)),
-    [props.id, dispatch]
-  );
-
-  const onShowModal = useCallback(() => {
-    dispatch(editTodos(props.todos));
-    dispatch(setTitleEdit(props.title));
-    dispatch(onToggleShow(true));
-    dispatch(setCurrentNoteId(props.id));
-    dispatch(setVisibleNote(props.isVisibleNote));
-  }, [dispatch, props]);
-
-  return (
-    <>
-      <Button type="text" block={true} onClick={onShowModal}>
-        <Text type="success">Редактировать</Text>
-      </Button>
-      <Popconfirm
-        title={`Удалить ${props.title}`}
-        okText={SOLUTION.YES}
-        cancelText={SOLUTION.NO}
-        onConfirm={confirm}
-      >
-        <Button type="text" block={true}>
-          <Text type="danger">Удалить</Text>
-        </Button>
-      </Popconfirm>
-    </>
-  );
-};
-
-export default PopoverNote;
+export default PopoverAnota;

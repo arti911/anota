@@ -9,9 +9,9 @@ import reportWebVitals from "./reportWebVitals";
 
 import "./styles/index.scss";
 
-import store from "./store";
+import { store } from "./store";
 import { fetchNotes } from "./utils";
-import { getNotes } from "./appSlice";
+import { getNotes } from "./slices/appSlice";
 
 store.subscribe(() => {
   const data = {

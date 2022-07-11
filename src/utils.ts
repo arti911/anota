@@ -1,6 +1,6 @@
 import { get } from "lodash";
 
-import { INote } from "./interfaces/Note/types";
+import { INote } from "./components/Note/interface";
 
 export const fetchNotes = () => {
   try {
