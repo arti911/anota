@@ -1,23 +1,41 @@
-import { Checkbox, Typography, Popover, Button, List, Row, Col } from "antd";
-import { EllipsisOutlined, EyeOutlined } from "@ant-design/icons";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Button, List } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import classname from "classnames";
 
-import PopoverNote from "./Popover";
-
 import "./style.scss";
-import { INote } from "../../interfaces/Note/types";
 
-const { Title } = Typography;
+import HeaderNote from "./Header";
+import FooterNote from "./Footer";
+import ListItem from "./ListItem";
 
-const ellipsisSetting = {
-  rows: 1,
-  tooltip: true,
-  expandable: true,
-  symbol: <span></span>,
-};
+import { INote } from "./interface";
+
+import { editTodos } from "../../slices/todoSlice";
+import { onToggleShow, setCurrentNoteId, setTitleEdit } from "../../slices/modalSlice";
+import { removeNote } from "../../slices/appSlice";
+import { setVisibleNote } from "../../slices/noteSlice";
+
+interface IOpenCurrentNote {
+  onToggleShow: () => void;
+  setTitleEdit: () => void;
+  setCurrentNoteId: () => void;
+  setVisibleNote: () => void;
+  editTodos: () => void;
+}
 
 const Note = (props: INote) => {
+  const openCurrentNote: IOpenCurrentNote = {
+    onToggleShow: () => onToggleShow(true),
+    setTitleEdit: () => setTitleEdit(props.title),
+    setCurrentNoteId: () => setCurrentNoteId(props.id),
+    setVisibleNote: () => setVisibleNote(props.isVisibleNote),
+    editTodos: () => editTodos(props.todos),
+  };
+
+  const dispatch = useDispatch();
+
   const [ showNote, setShowNote ] = useState(!props.isVisibleNote);
   const [ height, setHeight ] = useState(0);
 
@@ -27,60 +45,31 @@ const Note = (props: INote) => {
     "note__card--flip": showNote,
   });
 
-  const onShowNote = useCallback(() => {
-    setShowNote(!showNote)
-  }, [ showNote ]);
-
-  
   useEffect(() => {
     setHeight(cardContentRef?.current?.firstElementChild.offsetHeight);
   }, []);
+  
+  const toggleShowNote = () => setShowNote(!showNote);
+  const showModal = () => Object.values(openCurrentNote).map((fn) => dispatch(fn()));
+  const confirmRemoveNote = () => dispatch(removeNote(props.id));
+
+  const contentForPopover = {
+    data: props,
+    clickHandler: showModal,
+    confirmHandler: confirmRemoveNote,
+  };
 
   return (
     <div className={rootClass} style={{ minHeight: `${height}px` }}>
       <div className="note__wrapper note__wrapper--front" ref={cardContentRef}>
         <List
           dataSource={props.todos}
-          renderItem={(item) => (
-            <List.Item>
-              <Checkbox checked={item.isCheck} key={item.id}>
-                {item.title}
-              </Checkbox>
-            </List.Item>
-          )}
-          header={
-            <Row justify="space-between" align="middle" wrap={false}>
-              <Col span="21">
-                <Title level={4} ellipsis={ellipsisSetting} style={{ textAlign: "left" }}>{props.title}</Title>
-              </Col>
-              <Col span="3">
-                <Popover
-                  placement="bottomRight"
-                  trigger="click"
-                  content={
-                    <PopoverNote {...props} />
-                  }
-                  zIndex={999}
-                >
-                  <Button type="text" icon={<EllipsisOutlined />}></Button>
-                </Popover>
-              </Col>
-            </Row>
-          }
-          footer={
-            <>
-              <div />
-              <div style={{ textAlign: "center" }}>
-                Done {props.todos.filter((item) => item.isCheck).length} of&nbsp; {props.todos.length}
-              </div>
-              <div>
-                { !props.isVisibleNote && <Button type="text" icon={<EyeOutlined />} onClick={onShowNote} /> }
-              </div>
-            </>
-          }
-        ></List>
+          renderItem={(item) => (<ListItem title={item.title} isCheck={item.isCheck} key={item.id} />)}
+          header={<HeaderNote title={props.title} contentPopover={contentForPopover} />}
+          footer={<FooterNote todos={props.todos} isVisibleNote={props.isVisibleNote} clickHandler={toggleShowNote} />}
+        />
       </div>
-      <div className="note__wrapper note__wrapper--back" onClick={onShowNote}>
+      <div className="note__wrapper note__wrapper--back" onClick={toggleShowNote}>
         <Button type="text" size="large" icon={<EyeOutlined />} />
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import modalSlice from "../components/Modal/modalSlice";
-import appSlice from "../appSlice";
-import todoSlice from "../components/Modal/Todo/todoSlice";
-import noteSlice from "../components/Note/noteSlice";
+import appSlice from "../slices/appSlice";
+import modalSlice from "../slices/modalSlice";
+import todoSlice from "../slices/todoSlice";
+import noteSlice from "../slices/noteSlice";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     anota: appSlice,
     modal: modalSlice,
@@ -16,5 +16,3 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
-
-export default store;

@@ -9,15 +9,13 @@ import FooterAnota from "./components/Footer";
 
 import "./style.scss";
 
-const App = () => {
-  return (
-    <Layout className="anota">
-      <HeaderAnota />
-      <ContentAnota />
-      <FooterAnota />
-      <AddModal />
-    </Layout>
-  );
-};
+const App = () => (
+  <Layout className="anota">
+    <HeaderAnota />
+    <ContentAnota />
+    <FooterAnota />
+    <AddModal />
+  </Layout>
+);
 
 export default App;
