@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { get } from "lodash";
 
@@ -29,12 +29,17 @@ if (notes) {
   store.dispatch(getNotes(notes))
 }
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+const rootElem = document.getElementById("root");
+
+if (rootElem !== null) {
+  const root = ReactDOM.createRoot(rootElem);
+
+  root.render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
 
 serviceWorkerRegistration.register();
 // If you want to start measuring performance in your app, pass a function
