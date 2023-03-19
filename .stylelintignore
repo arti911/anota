@@ -1,0 +1,12 @@
+*.tsx
+*.jsx
+*.ts
+*.js
+*.md
+*.svg
+
+# dependencies
+/node_modules
+
+# production
+/build

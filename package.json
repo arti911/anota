@@ -4,28 +4,28 @@
   "private": true,
   "homepage": "https://arti911.github.io/anota",
   "dependencies": {
-    "@craco/craco": "^6.4.3",
+    "@craco/craco": "^7.1.0",
     "@reduxjs/toolkit": "^1.7.2",
     "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^13.3.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.2.1",
     "@types/lodash": "^4.14.178",
     "@types/react-dom": "^18.0.6",
-    "antd": "^4.18.5",
+    "antd": "^5.3.1",
     "array-move": "^4.0.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "9.1.2",
     "classnames": "^2.3.1",
     "craco-less": "^2.0.0",
-    "gh-pages": "^4.0.0",
+    "gh-pages": "^5.0.0",
     "less-loader": "^11.0.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
-    "react-scripts": "5.0.0",
+    "react-scripts": "5.0.1",
     "react-sortable-hoc": "^2.0.0",
     "sass": "^1.49.7",
-    "web-vitals": "^2.1.4",
+    "web-vitals": "^3.3.0",
     "workbox-background-sync": "^6.4.2",
     "workbox-broadcast-update": "^6.4.2",
     "workbox-cacheable-response": "^6.4.2",
@@ -48,23 +48,14 @@
     "eject": "craco eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "generate": " npx generate-react-cli component"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
+    "generate": " npx generate-react-cli component",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "lint:fix": "yarn lint -- --fix",
+    "lint:css": "stylelint src",
+    "lint:css:fix": "yarn lint:css -- --fix",
+    "format": "prettier --check src/**/*.{js,jsx,ts,tsx,scss,md,json} --config ./.prettierrc",
+    "format:fix": "prettier --write src/**/*.{js,jsx,ts,tsx,scss,md,json} --config ./.prettierrc",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -87,7 +78,35 @@
     "@storybook/node-logger": "^6.5.11",
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.11",
-    "typescript": "^4.5.5",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "8.36.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-compat": "^4.1.2",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-json-files": "^2.1.0",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-no-use-extend-native": "^0.5.0",
+    "eslint-plugin-optimize-regex": "^1.2.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-react-redux": "^4.0.0",
+    "eslint-plugin-sonarjs": "^0.18.0",
+    "eslint-plugin-storybook": "^0.6.11",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.4",
+    "stylelint": "^15.3.0",
+    "stylelint-config-clean-order": "^5.0.0",
+    "stylelint-config-standard": "^31.0.0",
+    "stylelint-config-standard-scss": "^7.0.1",
+    "typescript": "^5.0.2",
     "webpack": "5"
   }
 }
