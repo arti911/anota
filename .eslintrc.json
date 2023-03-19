@@ -75,9 +75,11 @@
       }
     ],
     "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": ["error", { "namedComponents": "arrow-function" }],
     "camelcase": "error",
     "spaced-comment": "error",
     "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
     "no-duplicate-imports": "error"
   }
 }
