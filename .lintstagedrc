@@ -1,0 +1,10 @@
+{
+  "*.scss": [
+    "stylelint --fix",
+    "prettier --write"
+  ],
+  "*.{ts,tsx,json}": [
+    "prettier --write",
+    "eslint --fix --max-warnings=0"
+  ]
+}
