@@ -1,25 +1,24 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Copy from ".";
+import Copy from '.';
 
-import { isCompleted, list } from "../Actions/constants";
-
-import { ICopy } from "./interface";
+import { list } from 'components/Actions/constants';
 
 export default {
-  title: "Anota/Buttons/Copy",
+  title: 'Anota/Buttons/Copy',
   component: Copy,
-} as Meta;
+} as ComponentMeta<typeof Copy>;
 
-const Template: Story<ICopy> = (args) => <Copy {...args} />;
+const Template: ComponentStory<typeof Copy> = (args) => {
+  const { isCompleted, settings } = args;
+  return <Copy isCompleted={isCompleted} settings={settings} />;
+};
 
 export const CopyBtn = Template.bind({});
 CopyBtn.args = {
-  isCompleted,
-  className: "actions__btn actions__btn--copy",
-  handlers: {
-    copyableSettings: {
-      text: list.map((item) => item.title).join(";"),
-    },
+  isCompleted: true,
+  className: 'actions__btn actions__btn--copy',
+  settings: {
+    text: list.map((item) => item.title).join(';'),
   },
 };

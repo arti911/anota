@@ -1,20 +1,19 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import TitleModal from ".";
-import { ITitle } from "./interface";
+import TitleModal from '.';
 
 export default {
-  title: "Anota/Components/Title",
+  title: 'Anota/Components/Title',
   component: TitleModal,
-} as Meta;
+} as ComponentMeta<typeof TitleModal>;
 
-const Template: Story<ITitle> = (args) => <TitleModal {...args} />;
+const Template: ComponentStory<typeof TitleModal> = (args) => {
+  const { text, onChange } = args;
+
+  return <TitleModal text={text} onChange={onChange} />;
+};
 
 export const Title = Template.bind({});
 Title.args = {
-  title: "Название 1",
-  handlers: {
-    setLocalTitle: (title: string): void => console.log("---title", title),
-    setTitleHandler: (title: string): void => console.log("---title", title),
-  },
+  text: 'Название 1',
 };

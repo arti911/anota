@@ -1,34 +1,38 @@
-import { Button, Popconfirm, Typography } from "antd";
+import { Button, ButtonProps, Popconfirm, Typography } from 'antd';
 
-import { IConfirm } from "./interface";
-
-import { SOLUTION } from "../Actions/constants";
+import { SOLUTION } from 'components/Actions/constants';
 
 const { Text } = Typography;
 
-const Confirm = (props: IConfirm) => {
-  const onTypeAction = () => props.handlers.setTypeAction(props.actionType);
+export interface ConfirmProps extends ButtonProps {
+  title: string;
+  textBtn: string;
+  isCompleted: boolean;
+  actionType: string;
+  onConfirm: () => void;
+  onAction: (value: string) => void;
+}
+
+const Confirm = (props: ConfirmProps) => {
+  const { title, danger, isCompleted, icon, textBtn, actionType, onConfirm, onAction } = props;
+
+  const onTypeAction = () => onAction(actionType);
 
   return (
     <>
-      <Popconfirm
-        title={props.title}
-        okText={SOLUTION.YES}
-        cancelText={SOLUTION.NO}
-        onConfirm={props.handlers.todosAction}
-      >
+      <Popconfirm title={title} okText={SOLUTION.YES} cancelText={SOLUTION.NO} onConfirm={onConfirm}>
         <Button
-          danger={props.danger}
-          disabled={!props.isCompleted}
+          danger={danger}
+          disabled={!isCompleted}
           type="primary"
-          icon={props.icon}
+          icon={icon}
           onClick={onTypeAction}
           shape="circle"
           size="large"
         />
       </Popconfirm>
       <figcaption>
-        <Text disabled={!props.isCompleted}>{props.textBtn}</Text>
+        <Text disabled={!isCompleted}>{textBtn}</Text>
       </figcaption>
     </>
   );

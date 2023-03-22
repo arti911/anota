@@ -1,16 +1,14 @@
-import { SyntheticEvent, useEffect } from "react";
-import { Layout, Statistic, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import { debounce } from "lodash";
+import { SearchOutlined } from '@ant-design/icons';
+import { Layout, Statistic, Input } from 'antd';
+import { debounce } from 'lodash';
+import { SyntheticEvent, useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from "../../hook";
+import Logo from 'components/Logo';
+import { useAppDispatch, useAppSelector } from 'hook';
+import { setSearch } from 'slices/appSlice';
+import { searchNotesFn } from 'utils';
 
-import { setSearch } from "../../slices/appSlice";
-import { searchNotesFn } from "../../utils";
-
-import Logo from "../Logo";
-
-import "./style.scss";
+import './style.scss';
 
 const { Header } = Layout;
 
@@ -24,26 +22,27 @@ const HeaderAnota = () => {
 
     const searchNotes = searchNotesFn(notes, element.value);
 
-    dispatch(setSearch({
-      notes: element.value === "" ? [] : searchNotes,
-      value: element.value
-    }));
+    dispatch(
+      setSearch({
+        notes: element.value === '' ? [] : searchNotes,
+        value: element.value,
+      })
+    );
   };
 
   useEffect(() => {
     const searchNotes = searchNotesFn(notes, search.value);
 
-    dispatch(setSearch({
-      notes: search.value === "" ? [] : searchNotes,
-      value: search.value
-    }));
-  }, [ notes ])
+    dispatch(
+      setSearch({
+        notes: search.value === '' ? [] : searchNotes,
+        value: search.value,
+      })
+    );
+  }, [dispatch, notes, search.value]);
 
-  const countNotes = search.notes.length > 0
-    ? search.notes.length
-    : search.value !== "" && search.notes.length === 0
-    ? search.notes.length
-    : notes.length;
+  const countNotes =
+    search.notes.length > 0 || (search.value !== '' && search.notes.length === 0) ? search.notes.length : notes.length;
 
   return (
     <Header className="anota-header">
@@ -51,13 +50,16 @@ const HeaderAnota = () => {
         <Logo />
       </div>
       <div className="anota-header__item anota-header__search">
-        <Input size="large" placeholder="search" prefix={<SearchOutlined />} allowClear onChange={debounce(onSearch, 300)} />
+        <Input
+          size="large"
+          placeholder="search"
+          prefix={<SearchOutlined />}
+          allowClear
+          onChange={debounce(onSearch, 300)}
+        />
       </div>
       <div className="anota-header__item anota-header__count">
-        <Statistic
-          title="Количество заметок"
-          value={countNotes}
-        />
+        <Statistic title="Количество заметок" value={countNotes} />
       </div>
     </Header>
   );

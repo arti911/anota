@@ -1,12 +1,12 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import DragHandle from ".";
+import DragHandle from '.';
 
 export default {
-    title: "Anota/Components/DragHandle",
-    component: DragHandle,
-} as Meta;
+  title: 'Anota/Components/DragHandle',
+  component: DragHandle,
+} as ComponentMeta<typeof DragHandle>;
 
-const Template: Story<any> = () => <DragHandle />;
+const Template: ComponentStory<typeof DragHandle> = () => <DragHandle />;
 
 export const DragHandleDefault = Template.bind({});

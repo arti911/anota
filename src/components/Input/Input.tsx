@@ -1,87 +1,85 @@
-import { Input, Button, Row } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
-import { SyntheticEvent } from "react";
+import { CloseOutlined } from '@ant-design/icons';
+import { Input, Button, Row } from 'antd';
+import { SyntheticEvent } from 'react';
 
-import { DEFAULT_TODO } from "../../constants";
+import DEFAULT_TODO from '../../constants';
 
-import { saveTodo, saveEditTodo, toggleEdit } from "../../slices/todoSlice";
-import { useAppDispatch, useAppSelector } from "../../hook";
+import { useAppDispatch, useAppSelector } from 'hook';
+import { ITodo, ITodoCurrent } from 'interfaces';
+import { saveTodo, saveEditTodo, toggleEdit } from 'slices/todoSlice';
 
-import "./style.scss";
+import './style.scss';
 
-import { ITodoCurrent } from "../../interfaces/modal.interface";
+const SEPARATOR = ';';
 
-const SEPARATOR = ";";
+interface InputModalProps extends ITodoCurrent {
+  onChangeTodo: (value: string) => void;
+  onChangeCurrentTodo: (value: ITodo | null) => void;
+}
 
-const InputModal = (props: ITodoCurrent) => {
+const InputModal = (props: InputModalProps) => {
+  const { todoTitle, currentTodo, onChangeTodo, onChangeCurrentTodo } = props;
+
   const dispatch = useAppDispatch();
 
   const { isEdit } = useAppSelector((state) => state.todo);
 
   const onChangeTodoTitle = (event: SyntheticEvent) => {
-    const element = event.target as HTMLInputElement;  
+    const element = event.target as HTMLInputElement;
 
-    props.handlers.setTodoTitle(element.value);
+    onChangeTodo(element.value);
   };
 
-  const save = (todo: string = "", index: number = 0) => {
-    const data = {
-      ...DEFAULT_TODO,
-      id: Date.now() + index,
-      title: todo.trim(),
-    };
-
-    dispatch(saveTodo(data));
+  const save = (todo = '', index = 0) => {
+    dispatch(
+      saveTodo({
+        ...DEFAULT_TODO,
+        id: Date.now() + index,
+        title: todo.trim(),
+      })
+    );
   };
 
   const saveEdit = () => {
-    if (props.currentTodo !== null) {
-      const data = {
-        ...props.currentTodo,
-        title: props.todoTitle.trim()
-      };
-  
-      dispatch(saveEditTodo(data));
+    if (currentTodo !== null) {
+      dispatch(
+        saveEditTodo({
+          ...currentTodo,
+          title: todoTitle.trim(),
+        })
+      );
     }
   };
 
   const onSaveEditinTodo = () => {
     saveEdit();
     dispatch(toggleEdit(false));
-    props.handlers.setTodoTitle("");
+    onChangeTodo('');
   };
 
   const onSaveTodo = () => {
-    props.todoTitle
+    todoTitle
       .trim()
       .split(SEPARATOR)
-      .filter((item) => item.trim() !== "")
-      .map((item, index) => save(item, index));
+      .filter((item) => item.trim() !== '')
+      .forEach((item, index) => save(item, index));
 
-      props.handlers.setTodoTitle("");
+    onChangeTodo('');
   };
 
   const onClose = () => {
-    props.handlers.setTodoTitle("");
-    props.handlers.setCurrentTodo(null);
+    onChangeTodo('');
+    onChangeCurrentTodo(null);
     dispatch(toggleEdit(false));
   };
 
   return (
     <Row className="anota-row">
-      <Input
-        placeholder="Добавьте пункт"
-        onChange={onChangeTodoTitle}
-        value={props.todoTitle}
-      />
-      <Button
-        type="primary"
-        disabled={props.todoTitle.length === 0}
-        onClick={isEdit ? onSaveEditinTodo : onSaveTodo}
-      >
-        {isEdit ? "Сохранить изменения" : "Добавить"}
+      <Input placeholder="Добавьте пункт" onChange={onChangeTodoTitle} value={todoTitle} />
+      <Button type="primary" disabled={todoTitle.length === 0} onClick={isEdit ? onSaveEditinTodo : onSaveTodo}>
+        {isEdit ? 'Сохранить изменения' : 'Добавить'}
       </Button>
-      <Button icon={<CloseOutlined />} type="text" onClick={onClose}></Button>
+      <Button icon={<CloseOutlined />} type="text" onClick={onClose} />
     </Row>
   );
 };

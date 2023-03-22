@@ -1,39 +1,39 @@
-import { ITodo } from "../../interfaces/modal.interface";
+import { ITodo } from 'interfaces';
 
 export const ACTION_TYPE = {
-  RESET: "RESET",
-  REMOVE: "REMOVE",
+  RESET: 'RESET',
+  REMOVE: 'REMOVE',
 };
 
 export const SOLUTION = {
-  YES: "Да",
-  NO: "Нет",
+  YES: 'Да',
+  NO: 'Нет',
 };
 
 export const list: ITodo[] = [
   {
     id: Date.now(),
-    title: "Путь к гражданской войне",
+    title: 'Путь к гражданской войне',
     isCheck: true,
   },
   {
     id: Date.now() + 1,
-    title: "Гражданская война",
+    title: 'Гражданская война',
     isCheck: false,
   },
   {
     id: Date.now() + 2,
-    title: "Удивительный Человек-паук",
+    title: 'Удивительный Человек-паук',
     isCheck: true,
   },
   {
     id: Date.now() + 3,
-    title: "Новые мстители",
+    title: 'Новые мстители',
     isCheck: false,
   },
   {
     id: Date.now() + 4,
-    title: "Боевой дневник карателя",
+    title: 'Боевой дневник карателя',
     isCheck: false,
   },
 ];

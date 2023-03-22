@@ -1,11 +1,12 @@
-import { Meta, Story } from "@storybook/react";
-import ToggleNoteVisibility from ".";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import ToggleNoteVisibility from '.';
 
 export default {
-  title: "Anota/Buttons/ToggleNoteVisibility",
+  title: 'Anota/Buttons/ToggleNoteVisibility',
   component: ToggleNoteVisibility,
-} as Meta;
+} as ComponentMeta<typeof ToggleNoteVisibility>;
 
-const Template: Story = () => <ToggleNoteVisibility />;
+const Template: ComponentStory<typeof ToggleNoteVisibility> = () => <ToggleNoteVisibility />;
 
 export const ToggleNoteVisibilityBtn = Template.bind({});

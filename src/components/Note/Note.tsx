@@ -1,77 +1,86 @@
-import { Button, List } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import classname from "classnames";
+import { EyeOutlined } from '@ant-design/icons';
+import { Button, List } from 'antd';
+import classname from 'classnames';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import "./style.scss";
+import './style.scss';
 
-import HeaderNote from "./Header";
-import FooterNote from "./Footer";
-import ListItem from "./ListItem";
+import FooterNote from './Footer';
+import HeaderNote from './Header';
+import ListItem from './ListItem';
 
-import { INote } from "./interface";
+import { ITodo } from 'interfaces';
+import { removeNote } from 'slices/appSlice';
+import { onToggleShow, setCurrentNoteId, setTitleEdit } from 'slices/modalSlice';
+import { setVisibleNote } from 'slices/noteSlice';
+import { editTodos } from 'slices/todoSlice';
 
-import { editTodos } from "../../slices/todoSlice";
-import { onToggleShow, setCurrentNoteId, setTitleEdit } from "../../slices/modalSlice";
-import { removeNote } from "../../slices/appSlice";
-import { setVisibleNote } from "../../slices/noteSlice";
-
-interface IOpenCurrentNote {
-  onToggleShow: () => void;
-  setTitleEdit: () => void;
-  setCurrentNoteId: () => void;
-  setVisibleNote: () => void;
-  editTodos: () => void;
+export interface NoteProps {
+  id: number;
+  title: string;
+  todos: ITodo[];
+  isVisibleNote: boolean;
+  // index?: number;
 }
 
-const Note = (props: INote) => {
-  const openCurrentNote: IOpenCurrentNote = {
-    onToggleShow: () => onToggleShow(true),
-    setTitleEdit: () => setTitleEdit(props.title),
-    setCurrentNoteId: () => setCurrentNoteId(props.id),
-    setVisibleNote: () => setVisibleNote(props.isVisibleNote),
-    editTodos: () => editTodos(props.todos),
-  };
+const Note = (props: NoteProps) => {
+  const { title, id, isVisibleNote, todos } = props;
 
   const dispatch = useDispatch();
 
-  const [ showNote, setShowNote ] = useState(!props.isVisibleNote);
-  const [ height, setHeight ] = useState(0);
+  const [showNote, setShowNote] = useState(!isVisibleNote);
+  const [height, setHeight] = useState(0);
 
-  const cardContentRef: any = useRef(null);
+  const cardContentRef = useRef<HTMLDivElement>(null);
 
-  const rootClass = classname("note__card", {
-    "note__card--flip": showNote,
+  const rootClass = classname('note__card', {
+    'note__card--flip': showNote,
   });
 
   useEffect(() => {
-    setHeight(cardContentRef?.current?.firstElementChild.offsetHeight);
+    if (cardContentRef.current) {
+      setHeight(cardContentRef.current?.offsetHeight);
+    }
   }, []);
-  
+
   const toggleShowNote = () => setShowNote(!showNote);
-  const showModal = () => Object.values(openCurrentNote).map((fn) => dispatch(fn()));
-  const confirmRemoveNote = () => dispatch(removeNote(props.id));
+  const showModal = () => {
+    onToggleShow(true);
+    setTitleEdit(title);
+    setCurrentNoteId(id);
+    setVisibleNote(isVisibleNote);
+    editTodos(todos);
+  };
+
+  const confirmRemoveNote = () => dispatch(removeNote(id));
 
   const contentForPopover = {
-    data: props,
-    clickHandler: showModal,
-    confirmHandler: confirmRemoveNote,
+    title,
+    onClick: showModal,
+    onConfirm: confirmRemoveNote,
   };
 
   return (
     <div className={rootClass} style={{ minHeight: `${height}px` }}>
       <div className="note__wrapper note__wrapper--front" ref={cardContentRef}>
         <List
-          dataSource={props.todos}
-          renderItem={(item) => (<ListItem title={item.title} isCheck={item.isCheck} key={item.id} />)}
-          header={<HeaderNote title={props.title} contentPopover={contentForPopover} />}
-          footer={<FooterNote todos={props.todos} isVisibleNote={props.isVisibleNote} clickHandler={toggleShowNote} />}
+          dataSource={todos}
+          renderItem={(item) => (
+            <ListItem isSort onChange={() => 1} title={item.title} isCheck={item.isCheck} key={item.id} />
+          )}
+          header={<HeaderNote title={title} contentPopover={contentForPopover} />}
+          footer={<FooterNote todos={todos} isVisibleNote={isVisibleNote} onClick={toggleShowNote} />}
         />
       </div>
-      <div className="note__wrapper note__wrapper--back" onClick={toggleShowNote}>
-        <Button type="text" size="large" icon={<EyeOutlined />} />
-      </div>
+
+      <Button
+        className="note__wrapper note__wrapper--back"
+        type="text"
+        size="large"
+        icon={<EyeOutlined />}
+        onClick={toggleShowNote}
+      />
     </div>
   );
 };

@@ -1,25 +1,29 @@
-import { useCallback, useRef, useState } from "react";
-import { List, Modal, message, Empty } from "antd";
-import { arrayMove } from "react-sortable-hoc";
-import ReactDOM from "react-dom";
+import { List, Modal, Empty } from 'antd';
+import { useCallback, useState } from 'react';
+import { arrayMove } from 'react-sortable-hoc';
 
-import TitleModal from "../Title";
-import TodoModal from "../Todo";
-import { SortableList, SortableItem } from "../Sortable/Sortable";
-import InputModal from "../Input";
-import Actions from "../Actions";
+import Actions from 'components/Actions';
 
-import { saveNote, saveEditNote } from "../../slices/appSlice";
-import { onToggleShow, setCurrentNoteId, setTitleEdit } from "../../slices/modalSlice";
-import { cleatTodos, sortTodos } from "../../slices/todoSlice";
-import { useAppSelector, useAppDispatch } from "../../hook";
+import InputModal from 'components/Input';
 
-import "./style.scss";
-import { ISort } from "../Note/interface";
-import { ITodo } from "../../interfaces/modal.interface";
+import { ISort } from 'components/Note/interface';
+
+// import SortableItem from 'components/Sortable/components/SortableItem';
+import SortableList from 'components/Sortable/components/SortableList';
+import TitleModal from 'components/Title';
+
+import TodoModal from 'components/Todo';
+
+import { useAppSelector, useAppDispatch } from 'hook';
+import { ITodo } from 'interfaces';
+import { saveNote, saveEditNote } from 'slices/appSlice';
+import { onToggleShow, setCurrentNoteId, setTitleEdit } from 'slices/modalSlice';
+import { cleatTodos, sortTodos } from 'slices/todoSlice';
+
+import './style.scss';
 
 const AddModal = () => {
-  const itemListRef: any = useRef(null);
+  // const itemListRef: any = useRef(null);
 
   const dispatch = useAppDispatch();
 
@@ -27,19 +31,20 @@ const AddModal = () => {
   const { todos } = useAppSelector((state) => state.todo);
   const { isVisibleNote } = useAppSelector((state) => state.note);
 
-  const [localTitle, setLocalTitle] = useState<string>("");
+  const [localTitle, setLocalTitle] = useState<string>('');
   const [currentTodo, setCurrentTodo] = useState<ITodo | null>(null);
-  const [todoTitle, setTodoTitle] = useState<string>("");
+  const [todoTitle, setTodoTitle] = useState<string>('');
 
   const onCancel = () => {
     dispatch(onToggleShow(false));
     dispatch(cleatTodos());
     dispatch(setCurrentNoteId(null));
-    dispatch(setTitleEdit("Новая заметка"));
-    setTodoTitle("");
+    dispatch(setTitleEdit('Новая заметка'));
+    setTodoTitle('');
   };
 
-  const saveEdit = useCallback((idNote: number | null) => {
+  const saveEdit = useCallback(
+    (idNote: number | null) => {
       const data = {
         note: {
           id: Date.now(),
@@ -47,12 +52,14 @@ const AddModal = () => {
           todos,
           isVisibleNote,
         },
-        idNote
+        idNote,
       };
 
       dispatch(saveEditNote(data));
       dispatch(setCurrentNoteId(null));
-    }, [ dispatch, localTitle, todos, isVisibleNote ]);
+    },
+    [dispatch, localTitle, todos, isVisibleNote]
+  );
 
   const save = useCallback(() => {
     const data = {
@@ -63,75 +70,69 @@ const AddModal = () => {
     };
 
     dispatch(saveNote(data));
-  }, [ dispatch, localTitle, todos, isVisibleNote ]);
+  }, [dispatch, localTitle, todos, isVisibleNote]);
 
   const onSaveNote = useCallback(() => {
     if (todos.length > 0) {
-      Number.isFinite(currentNoteId) ? saveEdit(currentNoteId) : save();
+      if (currentNoteId) {
+        saveEdit(currentNoteId);
+      } else {
+        save();
+      }
 
       dispatch(onToggleShow(false));
-      dispatch(setTitleEdit("Новая заметка"));
+      dispatch(setTitleEdit('Новая заметка'));
       dispatch(cleatTodos());
-      setTodoTitle("");
+      setTodoTitle('');
     } else {
-      message.warning("Добавьте контент в заметку!");
+      // message.warning('Добавьте контент в заметку!');
     }
-  }, [ dispatch, save, saveEdit, todos, currentNoteId ]);
+  }, [dispatch, save, saveEdit, todos, currentNoteId]);
 
   const onSortEnd = ({ oldIndex, newIndex }: ISort) => {
     const newTodos = arrayMove(todos, oldIndex, newIndex);
     dispatch(sortTodos(newTodos));
   };
 
-  const handlers = {
-    setLocalTitle,
-    setTodoTitle,
-    setCurrentTodo,
-  };
+  const onChangeTitle = useCallback((value: string) => setLocalTitle(value), []);
 
   return (
     <Modal
-      title={<TitleModal title={localTitle} handlers={handlers} />}
+      title={<TitleModal text={localTitle} onChange={onChangeTitle} />}
       style={{ top: 20 }}
       visible={visibleModal}
-      cancelText={<></>}
-      destroyOnClose={true}
+      cancelText={<div />}
+      destroyOnClose
       onOk={onSaveNote}
       onCancel={onCancel}
     >
       <InputModal
         todoTitle={todoTitle}
         currentTodo={currentTodo}
-        handlers={handlers}
+        onChangeTodo={setTodoTitle}
+        onChangeCurrentTodo={setCurrentTodo}
       />
       {todos.length > 0 ? (
         <SortableList
           onSortEnd={onSortEnd}
           useDragHandle
           helperClass="modal-list"
-          getContainer={(): any => ReactDOM?.findDOMNode(itemListRef.current)?.parentElement}
-        >
-          <List
-            dataSource={todos}
-            renderItem={(item, index) => (
-              <SortableItem
-                index={index}
-                key={item.id}
-                ref={itemListRef}
-              >
-                <TodoModal
-                  todo={item}
-                  index={index}
-                  handlers={handlers}
-                />
-              </SortableItem>
-            )}
-            footer={<Actions />}
-          />
-        </SortableList>
+          // getContainer={(): any => ReactDOM?.findDOMNode(itemListRef.current)?.parentElement}
+          renderItem={() => (
+            <List
+              dataSource={todos}
+              renderItem={(item, index) => (
+                // <SortableItem index={index} key={item.id}>
+                <TodoModal todo={item} index={index} onChangeTodoTitle={setTodoTitle} onEditTodo={setCurrentTodo} />
+                // </SortableItem>
+              )}
+              footer={<Actions />}
+            />
+          )}
+        />
       ) : (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      ) }
+      )}
     </Modal>
   );
 };

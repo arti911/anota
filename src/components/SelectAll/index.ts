@@ -1,3 +1,3 @@
-import SelectAll from "./SelectAll";
+import SelectAll from './SelectAll';
 
 export default SelectAll;

@@ -1,5 +1,7 @@
-export const DEFAULT_TODO = {
+const DEFAULT_TODO = {
   id: 0,
-  title: "",
+  title: '',
   isCheck: false,
 };
+
+export default DEFAULT_TODO;

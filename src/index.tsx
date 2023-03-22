@@ -1,35 +1,34 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { get } from "lodash";
+import { get } from 'lodash';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 
-import App from "./App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import reportWebVitals from "./reportWebVitals";
+import App from 'App';
+import reportWebVitals from 'reportWebVitals';
+import * as serviceWorkerRegistration from 'serviceWorkerRegistration';
+import { getNotes } from 'slices/appSlice';
+import { store } from 'store';
+import { fetchNotes } from 'utils';
 
-import "./styles/index.scss";
-
-import { store } from "./store";
-import { fetchNotes } from "./utils";
-import { getNotes } from "./slices/appSlice";
+import './styles/index.scss';
 
 store.subscribe(() => {
   const data = {
     notes: {
-      lists: get(store.getState(), "anota.notes", [])
-    }
+      lists: get(store.getState(), 'anota.notes', []),
+    },
   };
 
-  localStorage.setItem("vuex", JSON.stringify(data));
+  localStorage.setItem('vuex', JSON.stringify(data));
 });
 
 const notes = fetchNotes();
 
 if (notes) {
-  store.dispatch(getNotes(notes))
+  store.dispatch(getNotes(notes));
 }
 
-const rootElem = document.getElementById("root");
+const rootElem = document.getElementById('root');
 
 if (rootElem !== null) {
   const root = ReactDOM.createRoot(rootElem);

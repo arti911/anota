@@ -1,24 +1,29 @@
-import { Typography } from "antd";
-import { useEffect } from "react";
+import { Typography } from 'antd';
+import { useEffect } from 'react';
 
-import { useAppSelector } from "../../hook";
-
-import { ITitle } from "./interface";
+import { useAppSelector } from 'hook';
 
 const { Text } = Typography;
 
-const TitleModal = (props: ITitle) => {
+interface TitleProps {
+  text: string;
+  onChange: (value: string) => void;
+}
+
+const TitleModal = (props: TitleProps) => {
+  const { text, onChange } = props;
+
   const { title } = useAppSelector((state) => state.modal);
 
   useEffect(() => {
-    props.handlers.setLocalTitle(title);
-  }, []);
+    onChange(title);
+  }, [onChange, title]);
 
   const options = {
-    onChange: props.handlers.setLocalTitle
+    onChange,
   };
 
-  return <Text editable={options}>{props.title}</Text>;
+  return <Text editable={options}>{text}</Text>;
 };
 
 export default TitleModal;

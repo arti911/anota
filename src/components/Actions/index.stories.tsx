@@ -1,11 +1,12 @@
-import { Meta, Story } from "@storybook/react";
-import Actions from ".";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Actions from '.';
 
 export default {
-    title: "Anota/Components/ActionsNote",
-    component: Actions,
-} as Meta;
+  title: 'Anota/Components/ActionsNote',
+  component: Actions,
+} as ComponentMeta<typeof Actions>;
 
-const Template: Story<any> = (args) => <Actions {...args} />;
+const Template: ComponentStory<typeof Actions> = () => <Actions />;
 
 export const ActionsNote = Template.bind({});

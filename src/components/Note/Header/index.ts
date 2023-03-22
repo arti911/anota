@@ -1,3 +1,3 @@
-import HeaderNote from "./Header";
+import HeaderNote from './Header';
 
 export default HeaderNote;

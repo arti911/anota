@@ -6,11 +6,12 @@ $logo-colors: (
 );
 
 .logo {
-  display: inline-grid;
-  grid-template-rows: 25px 25px;
-  grid-template-columns: 25px 25px;
-  border-radius: 6px;
   overflow: hidden;
+  display: inline-grid;
+  grid-template-columns: 25px 25px;
+  grid-template-rows: 25px 25px;
+
+  border-radius: 6px;
 
   @each $count, $color in $logo-colors {
     span:nth-child(#{$count}) {

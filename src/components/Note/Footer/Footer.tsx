@@ -1,20 +1,24 @@
-import { Button } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
-import { IFooterNote } from "./interface";
+import { EyeOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
-const FooterNote = (props: IFooterNote) => {
+import { ITodo } from 'interfaces';
+
+interface FooterNoteProps {
+  todos: ITodo[];
+  isVisibleNote: boolean;
+  onClick: () => void;
+}
+
+const FooterNote = (props: FooterNoteProps) => {
+  const { todos, isVisibleNote, onClick } = props;
+
   return (
     <>
       <div />
-      <div style={{ textAlign: "center" }}>
-        Done {props.todos.filter((item) => item.isCheck).length} of&nbsp;{" "}
-        {props.todos.length}
+      <div style={{ textAlign: 'center' }}>
+        Done {todos.filter((item) => item.isCheck).length} of&nbsp; {todos.length}
       </div>
-      <div>
-        {!props.isVisibleNote && (
-          <Button type="text" icon={<EyeOutlined />} onClick={props.clickHandler} />
-        )}
-      </div>
+      <div>{!isVisibleNote && <Button type="text" icon={<EyeOutlined />} onClick={onClick} />}</div>
     </>
   );
 };

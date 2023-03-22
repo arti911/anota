@@ -1,28 +1,28 @@
-import { Button, Popconfirm, Typography } from "antd";
+import { Button, Popconfirm, Typography } from 'antd';
 
-import { SOLUTION } from "../Actions/constants";
-import { IPopoverContent } from "./interface";
+import { SOLUTION } from 'components/Actions/constants';
 
 const { Text } = Typography;
 
-const PopoverContent = (props: IPopoverContent) => {
+export interface PopoverContentProps {
+  title: string;
+  onClick: () => void;
+  onConfirm: () => void;
+}
+
+export const PopoverContent = (props: PopoverContentProps) => {
+  const { title, onClick, onConfirm } = props;
+
   return (
     <>
-      <Button type="text" block={true} onClick={props.clickHandler}>
+      <Button type="text" block onClick={onClick}>
         <Text type="success">Редактировать</Text>
       </Button>
-      <Popconfirm
-        title={`Удалить ${props.data.title}`}
-        okText={SOLUTION.YES}
-        cancelText={SOLUTION.NO}
-        onConfirm={props.confirmHandler}
-      >
-        <Button type="text" block={true}>
+      <Popconfirm title={`Удалить ${title}`} okText={SOLUTION.YES} cancelText={SOLUTION.NO} onConfirm={onConfirm}>
+        <Button type="text" block>
           <Text type="danger">Удалить</Text>
         </Button>
       </Popconfirm>
     </>
   );
 };
-
-export default PopoverContent;

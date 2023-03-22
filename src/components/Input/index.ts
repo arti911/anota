@@ -1,3 +1,3 @@
-import InputModal from "./Input";
+import InputModal from './Input';
 
 export default InputModal;

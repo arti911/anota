@@ -1,3 +1,3 @@
-import TitleModal from "./Title";
+import TitleModal from './Title';
 
 export default TitleModal;

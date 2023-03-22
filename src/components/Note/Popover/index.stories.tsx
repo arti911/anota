@@ -1,26 +1,22 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import PopoverAnota from "./Popover";
-
-import { IPopover } from "./interface";
+import PopoverAnota from '.';
 
 export default {
-  title: "Anota/Note/Popover",
+  title: 'Anota/Note/Popover',
   component: PopoverAnota,
-} as Meta;
+} as ComponentMeta<typeof PopoverAnota>;
 
-const Template: Story<IPopover> = (args) => <PopoverAnota {...args} />;
+const Template: ComponentStory<typeof PopoverAnota> = (args) => {
+  const { placement, trigger, zIndex, data } = args;
+
+  return <PopoverAnota placement={placement} trigger={trigger} zIndex={zIndex} data={data} />;
+};
 
 export const Popover = Template.bind({});
 Popover.args = {
-  placement: "bottomRight",
-  trigger: "click",
+  placement: 'bottomRight',
+  trigger: 'click',
   zIndex: 999,
-  content: {
-    data: {
-      title: "111",
-    },
-    clickHandler: () => console.log("Редактировать"),
-    confirmHandler: () => console.log("Удалить"),
-  },
+  title: '111',
 };

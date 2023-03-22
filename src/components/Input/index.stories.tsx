@@ -1,26 +1,31 @@
-import { Meta, Story } from "@storybook/react";
-import { SyntheticEvent } from "react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import InputModal from ".";
-
-import { ITodoCurrent } from "../../interfaces/modal.interface";
+import InputModal from '.';
 
 export default {
-  title: "Anota/Components/Input",
+  title: 'Anota/Components/Input',
   component: InputModal,
-} as Meta;
+} as ComponentMeta<typeof InputModal>;
 
-const Template: Story<ITodoCurrent> = (args) => <InputModal {...args} />;
+const Template: ComponentStory<typeof InputModal> = (args) => {
+  const { todoTitle, currentTodo, onChangeTodo, onChangeCurrentTodo } = args;
+
+  return (
+    <InputModal
+      todoTitle={todoTitle}
+      currentTodo={currentTodo}
+      onChangeTodo={onChangeTodo}
+      onChangeCurrentTodo={onChangeCurrentTodo}
+    />
+  );
+};
 
 export const Input = Template.bind({});
 Input.args = {
-  todoTitle: "Название",
+  todoTitle: 'Название',
   currentTodo: {
     id: 0,
-    title: "Текущее название",
+    title: 'Текущее название',
     isCheck: false,
   },
-  handlers: {
-    setTodoTitleHandler: (event: SyntheticEvent) => console.log("---event", event),
-  }
 };
