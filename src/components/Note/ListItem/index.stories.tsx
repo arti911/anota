@@ -1,18 +1,19 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import ListItem from ".";
-
-import { IListItem } from "./interface";
+import ListItem from '.';
 
 export default {
-  title: "Anota/Note/ListItem",
+  title: 'Anota/Note/ListItem',
   component: ListItem,
-} as Meta;
+} as ComponentMeta<typeof ListItem>;
 
-const Template: Story<IListItem> = (args) => <ListItem {...args} />;
+const Template: ComponentStory<typeof ListItem> = (args) => {
+  const { title, isCheck, isSort, onChange } = args;
+  return <ListItem title={title} isCheck={isCheck} isSort={isSort} onChange={onChange} />;
+};
 
 export const ListItemDefault = Template.bind({});
 ListItemDefault.args = {
-  title: "Гражданская война",
+  title: 'Гражданская война',
   isCheck: false,
 };

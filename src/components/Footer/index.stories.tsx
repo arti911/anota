@@ -1,12 +1,12 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import FooterAnota from ".";
+import FooterAnota from '.';
 
 export default {
-  title: "Anota/Components/Footer",
+  title: 'Anota/Components/Footer',
   component: FooterAnota,
-} as Meta;
+} as ComponentMeta<typeof FooterAnota>;
 
-const Template: Story<any> = () => <FooterAnota />;
+const Template: ComponentStory<typeof FooterAnota> = () => <FooterAnota />;
 
 export const FooterApp = Template.bind({});

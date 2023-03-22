@@ -1,3 +1,3 @@
-import ContentAnota from "./Content";
+import ContentAnota from './Content';
 
 export default ContentAnota;

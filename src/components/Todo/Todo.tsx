@@ -1,68 +1,71 @@
-import { Button, List, Checkbox, Popconfirm, message } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useCallback } from "react";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, List, Checkbox, Popconfirm } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { useCallback } from 'react';
 
-import { useAppDispatch, useAppSelector } from "../../hook";
+import { SOLUTION } from 'components/Actions/constants';
+import DragHandle from 'components/DragHandle';
+import { useAppDispatch, useAppSelector } from 'hook';
 
-import DragHandle from "../DragHandle";
+import { ITodo } from 'interfaces';
+import { checkTodo, removeTodo, toggleEdit } from 'slices/todoSlice';
 
-import { checkTodo, removeTodo, toggleEdit } from "../../slices/todoSlice";
-import { SOLUTION } from "../Actions/constants";
-import { ITodoComponent } from "./interface";
+interface TodoProps {
+  todo: ITodo;
+  index: number;
+  onChangeTodoTitle: (value: string) => void;
+  onEditTodo: (value: ITodo) => void;
+}
 
-const TodoModal = (props: ITodoComponent) => {
+const TodoModal = (props: TodoProps) => {
+  const { todo, index, onChangeTodoTitle, onEditTodo } = props;
   const dispatch = useAppDispatch();
 
   const { todos } = useAppSelector((state) => state.todo);
 
   const edit = useCallback(() => {
     dispatch(toggleEdit(true));
-    props.handlers.setTodoTitle(props.todo.title);
-    props.handlers.setCurrentTodo(props.todo);
-  }, [ dispatch, props.todo, props.handlers ]);
+    onChangeTodoTitle(todo.title);
+    onEditTodo(todo);
+  }, [dispatch, onEditTodo, onChangeTodoTitle, todo]);
 
   const confirm = useCallback(() => {
-    dispatch(removeTodo(props.index));
-    message.success(`${props.todo.title} успешно удален!`);
-  }, [ dispatch, props.index, props.todo ]);
+    dispatch(removeTodo(index));
+    // message.success(`${todo.title} успешно удален!`);
+  }, [dispatch, index]);
 
   const actions = [
-    <Button
-      shape="circle"
-      icon={<EditOutlined />}
-      type="primary"
-      onClick={edit}
-    ></Button>,
+    <Button shape="circle" icon={<EditOutlined />} type="primary" onClick={edit} key="button" />,
     <Popconfirm
-      title={`Удалить ${props.todo.title}?`}
+      title={`Удалить ${todo.title}?`}
       okText={SOLUTION.YES}
       cancelText={SOLUTION.NO}
       onConfirm={confirm}
+      key="popconfirm"
     >
-      <Button shape="circle" icon={<DeleteOutlined />} danger={true}></Button>
-    </Popconfirm>
+      <Button shape="circle" icon={<DeleteOutlined />} danger />
+    </Popconfirm>,
   ];
 
   const onCheck = (event: CheckboxChangeEvent): void => {
     const elements = event.target as HTMLInputElement;
 
     dispatch(
-        checkTodo({
-          index: props.index,
-          todo: {
-            ...todos[props.index],
-            isCheck: elements.checked,
-          }
-        })
-      );
-    };
+      checkTodo({
+        index,
+        todo: {
+          ...todos[index],
+          isCheck: elements.checked,
+        },
+      })
+    );
+  };
 
   return (
     <List.Item className="modal-list__item" actions={actions}>
       <DragHandle />
-      <Checkbox checked={props.todo.isCheck} onChange={onCheck}>
-        {props.todo.title}
+      <Checkbox checked={todo.isCheck} onChange={onCheck}>
+        {todo.title}
       </Checkbox>
     </List.Item>
   );

@@ -1,16 +1,15 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import SelectAll from ".";
-import { ISelectAll } from "./interface";
+import SelectAll from '.';
 
 export default {
-  title: "Anota/Buttons/SelectAll",
+  title: 'Anota/Buttons/SelectAll',
   component: SelectAll,
-} as Meta;
+} as ComponentMeta<typeof SelectAll>;
 
-const Template: Story<ISelectAll> = (args) => <SelectAll {...args} />;
+const Template: ComponentStory<typeof SelectAll> = (args) => {
+  const { onSelect } = args;
+  return <SelectAll onSelect={onSelect} />;
+};
 
 export const SelectAllBtn = Template.bind({});
-SelectAllBtn.args = {
-  handlers: {},
-};

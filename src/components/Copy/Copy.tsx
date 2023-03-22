@@ -1,23 +1,24 @@
-import { Button, Typography } from "antd";
-
-import { ICopy } from "./interface";
+import { Button, ButtonProps, Typography } from 'antd';
 
 const { Text } = Typography;
 
-const Copy = (props: ICopy) => {
+interface ButtonCopyProps extends ButtonProps {
+  isCompleted: boolean;
+  settings: {
+    text: string;
+  };
+}
+
+const Copy = (props: ButtonCopyProps) => {
+  const { isCompleted, className, settings } = props;
+
   return (
     <>
-      <Button
-        disabled={!props.isCompleted}
-        type="primary"
-        className={props.className}
-        shape="circle"
-        size="large"
-      >
-        <Text copyable={props.handlers.copyableSettings} />
+      <Button disabled={!isCompleted} type="primary" className={className} shape="circle" size="large">
+        <Text copyable={settings} />
       </Button>
       <figcaption>
-        <Text disabled={!props.isCompleted}>Скопировать</Text>
+        <Text disabled={!isCompleted}>Скопировать</Text>
       </figcaption>
     </>
   );

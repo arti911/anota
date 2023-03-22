@@ -1,9 +1,9 @@
-import { Button, Typography } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { Button, Typography } from 'antd';
 
-import { useAppDispatch, useAppSelector } from "../../hook";
+import { useAppDispatch, useAppSelector } from 'hook';
 
-import { setVisibleNote } from "../../slices/noteSlice";
+import { setVisibleNote } from 'slices/noteSlice';
 
 const { Text } = Typography;
 
@@ -24,7 +24,7 @@ const ToggleNoteVisibility = () => {
         size="large"
       />
       <figcaption>
-        <Text>{isVisibleNote ? "Скрыть" : "Показать"}</Text>
+        <Text>{isVisibleNote ? 'Скрыть' : 'Показать'}</Text>
       </figcaption>
     </>
   );

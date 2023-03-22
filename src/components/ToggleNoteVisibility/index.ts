@@ -1,3 +1,3 @@
-import ToggleNoteVisibility from "./ToggleNoteVisibility";
+import ToggleNoteVisibility from './ToggleNoteVisibility';
 
 export default ToggleNoteVisibility;

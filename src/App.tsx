@@ -1,13 +1,13 @@
-import { Layout } from "antd";
+import { Layout } from 'antd';
 
-import "antd/dist/antd.less";
+// import 'antd/dist/antd.less';
 
-import AddModal from "./components/Modal";
-import HeaderAnota from "./components/Header";
-import ContentAnota from "./components/Content";
-import FooterAnota from "./components/Footer";
+import ContentAnota from 'components/Content';
+import FooterAnota from 'components/Footer';
+import HeaderAnota from 'components/Header';
+import AddModal from 'components/Modal';
 
-import "./style.scss";
+import './style.scss';
 
 const App = () => (
   <Layout className="anota">

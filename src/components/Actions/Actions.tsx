@@ -1,66 +1,65 @@
-import { useState } from "react";
+// import { useState } from 'react';
 
-import { checkTodo, sortTodos } from "../../slices/todoSlice";
-import { ACTION_TYPE } from "./constants";
+// import { ACTION_TYPE } from './constants';
 
-import { useAppDispatch, useAppSelector } from "../../hook";
+// import { useAppDispatch, useAppSelector } from 'hook';
+// import { checkTodo, sortTodos } from 'slices/todoSlice';
 
-import "./style.scss";
+import './style.scss';
 
 const Actions = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  const { todos } = useAppSelector((state) => state.todo);
+  // const { todos } = useAppSelector((state) => state.todo);
 
-  const [ typeAction, setTypeAction ] = useState<string | null>(null);
+  // const [typeAction, setTypeAction] = useState<string | null>(null);
 
-  const isCompleted = todos.some((item) => item.isCheck);
+  // const isCompleted = todos.some((item) => item.isCheck);
 
-  const completeTodo = todos.filter((item) => item.isCheck);
-  const notCompleteTodo = todos.filter((item) => !item.isCheck);
+  // const completeTodo = todos.filter((item) => item.isCheck);
+  // const notCompleteTodo = todos.filter((item) => !item.isCheck);
 
-  const toggleTodos = (index: number, isCheck: boolean) => {
-    dispatch(checkTodo({
-      index,
-      todo: {
-        ...todos[index],
-        isCheck,
-      }
-    }));
-  };
+  // const toggleTodos = (index: number, isCheck: boolean) => {
+  //   dispatch(
+  //     checkTodo({
+  //       index,
+  //       todo: {
+  //         ...todos[index],
+  //         isCheck,
+  //       },
+  //     })
+  //   );
+  // };
 
-  const removeTodos = () => {
-    const newTodos = todos.filter((item) => !item.isCheck);
-    
-    dispatch(sortTodos(newTodos));
-  };
+  // const removeTodos = () => {
+  //   const newTodos = todos.filter((item) => !item.isCheck);
 
-  const todosAction = () => {
-    completeTodo.forEach((todo) => {
-      const index = todos.findIndex((item) => item.id === todo.id);
-  
-      typeAction === ACTION_TYPE.RESET ? toggleTodos(index, false) : removeTodos();
-    });
-  };
+  //   dispatch(sortTodos(newTodos));
+  // };
 
-  const selectAll = () => {
-    notCompleteTodo.forEach((todo) => {
-      const index = todos.findIndex((item) => item.id === todo.id);
+  // const todosAction = () => {
+  //   completeTodo.forEach((todo) => {
+  //     const index = todos.findIndex((item) => item.id === todo.id);
 
-      toggleTodos(index, true);
-    });
-  };
+  //     if (typeAction === ACTION_TYPE.RESET) {
+  //       toggleTodos(index, false);
+  //     } else {
+  //       removeTodos();
+  //     }
+  //   });
+  // };
 
-  const copyableSettings = {
-    text: completeTodo.map((item) => item.title).join(";"),
-  };
+  // const selectAll = () => {
+  //   notCompleteTodo.forEach((todo) => {
+  //     const index = todos.findIndex((item) => item.id === todo.id);
 
-  const handlers = {
-    selectAll,
-    setTypeAction,
-    todosAction,
-    copyableSettings,
-  };
+  //     toggleTodos(index, true);
+  //   });
+  // };
+
+  // const copyableSettings = {
+  //   text: completeTodo.map((item) => item.title).join(';'),
+  // };
 
   return (
     <div className="actions">

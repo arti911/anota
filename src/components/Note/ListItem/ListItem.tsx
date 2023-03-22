@@ -1,18 +1,25 @@
-import { List, Checkbox } from "antd";
+import { List, Checkbox } from 'antd';
 
-import DragHandle from "../../DragHandle";
-
-import { IListItem } from "./interface";
+import DragHandle from 'components/DragHandle';
 
 const { Item } = List;
 
-const ListItem = (props: IListItem) => {
+interface ListItemProps {
+  title: string;
+  isCheck: boolean;
+  isSort: boolean;
+  // isAction: boolean;
+  onChange: () => void;
+}
+
+const ListItem = (props: ListItemProps) => {
+  const { isSort, isCheck, title, onChange } = props;
   return (
     <Item>
-      {props.isSort && <DragHandle />}
+      {isSort && <DragHandle />}
 
-      <Checkbox checked={props.isCheck} onChange={props.changeHandler}>
-        {props.title}
+      <Checkbox checked={isCheck} onChange={onChange}>
+        {title}
       </Checkbox>
     </Item>
   );

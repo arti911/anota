@@ -1,14 +1,12 @@
-import { Col } from "antd";
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Col } from 'antd';
 
-import HeaderNote from ".";
-
-import { IHeaderNote } from "./interface";
+import HeaderNote from '.';
 
 // import { createFakeData } from "../../../fakeData";
 
 export default {
-  title: "Anota/Note/Header",
+  title: 'Anota/Note/Header',
   component: HeaderNote,
   decorators: [
     (Elem) => (
@@ -17,17 +15,14 @@ export default {
       </Col>
     ),
   ],
-} as Meta;
+} as ComponentMeta<typeof HeaderNote>;
 
-const Template: Story<IHeaderNote> = (args) => <HeaderNote {...args} />;
+const Template: ComponentStory<typeof HeaderNote> = (args) => {
+  const { title, contentPopover } = args;
+
+  return <HeaderNote title={title} contentPopover={contentPopover} />;
+};
 export const Header = Template.bind({});
 Header.args = {
-  title: "Название",
-  contentPopover: {
-    data: {
-      title: "111"
-    },
-    clickHandler: () => console.log("Редактировать"),
-    confirmHandler: () => console.log("Удалить"),
-  },
+  title: 'Название',
 };

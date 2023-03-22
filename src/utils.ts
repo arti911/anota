@@ -1,22 +1,29 @@
-import { get } from "lodash";
+import { NoteProps } from './components/Note/Note';
 
-import { INote } from "./components/Note/interface";
+interface FetchReturn {
+  notes: {
+    list: NoteProps[];
+  };
+}
 
-export const fetchNotes = () => {
-  try {
-    const response = localStorage.getItem("vuex");
+export const fetchNotes = (): NoteProps[] => {
+  const response = localStorage.getItem('vuex');
 
-    if (response) {
-      return get(JSON.parse(response), "notes.lists", []);
-    }
-  } catch (e) {
-    console.log(e);
+  if (response) {
+    const {
+      notes: { list },
+    } = JSON.parse(response) as FetchReturn;
+
+    return list;
   }
+
+  throw new Error('Ой');
 };
 
-export const searchNotesFn = (notes: Array<INote>, value: string): Array<INote> => {
-  return notes.filter((item) => (
-    item.title.toLocaleLowerCase().trim().includes(value.toLocaleLowerCase())
-    || item.todos.some((todo) => todo.title.toLocaleLowerCase().trim().includes(value.toLocaleLowerCase()))
-  ));
-}
+export const searchNotesFn = (notes: NoteProps[], value: string): NoteProps[] => {
+  return notes.filter(
+    (item) =>
+      item.title.toLocaleLowerCase().trim().includes(value.toLocaleLowerCase()) ||
+      item.todos.some((todo) => todo.title.toLocaleLowerCase().trim().includes(value.toLocaleLowerCase()))
+  );
+};

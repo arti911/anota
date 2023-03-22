@@ -1,3 +1,3 @@
-import FooterAnota from "./Footer";
+import FooterAnota from './Footer';
 
 export default FooterAnota;

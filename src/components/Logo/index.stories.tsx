@@ -1,12 +1,12 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Logo from ".";
+import Logo from '.';
 
 export default {
-  title: "Anota/Components/Logo",
+  title: 'Anota/Components/Logo',
   component: Logo,
-} as Meta;
+} as ComponentMeta<typeof Logo>;
 
-const Template: Story<any> = () => <Logo />;
+const Template: ComponentStory<typeof Logo> = () => <Logo />;
 
 export const LogoDefault = Template.bind({});

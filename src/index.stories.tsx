@@ -1,11 +1,12 @@
-import { Meta, Story } from "@storybook/react";
-import App from "./App";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import App from './App';
 
 export default {
-    title: "Anota/Layouts/Main",
-    component: App,
-} as Meta;
+  title: 'Anota/Layouts/Main',
+  component: App,
+} as ComponentMeta<typeof App>;
 
-const Template: Story = () => <App />;
+const Template: ComponentStory<typeof App> = () => <App />;
 
 export const Main = Template.bind({});

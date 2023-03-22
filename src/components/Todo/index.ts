@@ -1,3 +1,3 @@
-import TodoModal from "./Todo";
+import TodoModal from './Todo';
 
 export default TodoModal;

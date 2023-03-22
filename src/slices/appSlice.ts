@@ -1,30 +1,51 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IApp } from "../interfaces/app.interface";
-import { INote } from "../components/Note/interface";
+import { ITodo } from 'interfaces';
 
-const initialState: IApp = {
+interface NoteProps {
+  id: number;
+  title: string;
+  todos: ITodo[];
+  isVisibleNote: boolean;
+  // index?: number;
+}
+
+interface SearchProps {
+  notes: NoteProps[];
+  value: string;
+}
+
+interface AppState {
+  notes: NoteProps[];
+  search: SearchProps;
+}
+
+const initialState: AppState = {
   notes: [],
   search: {
     notes: [],
-    value: ""
+    value: '',
   },
-}
+};
 
 const appSlice = createSlice({
-  name: "app",
+  name: 'app',
   initialState,
   reducers: {
-    getNotes: (state, action: PayloadAction<INote[]>) => {
-      state.notes = action.payload;
-    },
-    saveNote: (state, action: PayloadAction<INote>) => {
+    getNotes: (state, action: PayloadAction<NoteProps[]>) => ({
+      ...state,
+      notes: action.payload,
+    }),
+    saveNote: (state, action: PayloadAction<NoteProps>) => {
       state.notes.push(action.payload);
     },
-    saveEditNote: (state, action: PayloadAction<{
-      idNote: number | null;
-      note: INote;
-    }>) => {
+    saveEditNote: (
+      state,
+      action: PayloadAction<{
+        idNote: number | null;
+        note: NoteProps;
+      }>
+    ) => {
       const { note, idNote } = action.payload;
 
       const index = state.notes.findIndex((item) => item.id === idNote);
@@ -35,28 +56,23 @@ const appSlice = createSlice({
       const index = state.notes.findIndex((item) => item.id === action.payload);
       state.notes.splice(index, 1);
     },
-    saveNotesAfterSorting: (state, action: PayloadAction<INote[]>) => {
-      state.notes = action.payload;
-    },
-    setSearch: (state, action: PayloadAction<{
-      notes: INote[];
-      value: string;
-    }>) => {
-      state.search = {
-        ...state.search,
-        ...action.payload
-      };
-    }
+    saveNotesAfterSorting: (state, action: PayloadAction<NoteProps[]>) => ({
+      ...state,
+      notes: action.payload,
+    }),
+    setSearch: (
+      state,
+      action: PayloadAction<{
+        notes: NoteProps[];
+        value: string;
+      }>
+    ) => ({
+      ...state,
+      search: action.payload,
+    }),
   },
 });
 
-export const {
-  getNotes,
-  saveNote,
-  saveEditNote,
-  removeNote,
-  saveNotesAfterSorting,
-  setSearch,
-} = appSlice.actions;
+export const { getNotes, saveNote, saveEditNote, removeNote, saveNotesAfterSorting, setSearch } = appSlice.actions;
 
 export default appSlice.reducer;

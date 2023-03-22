@@ -1,23 +1,24 @@
-import { Meta, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import TodoModal from ".";
-
-import { ITodoComponent } from "./interface";
+import TodoModal from '.';
 
 export default {
-  title: "Anota/Components/Todo",
+  title: 'Anota/Components/Todo',
   component: TodoModal,
-} as Meta;
+} as ComponentMeta<typeof TodoModal>;
 
-const Template: Story<ITodoComponent> = (args) => <TodoModal {...args} />;
+const Template: ComponentStory<typeof TodoModal> = (args) => {
+  const { todo, index, onChangeTodoTitle, onEditTodo } = args;
+
+  return <TodoModal todo={todo} index={index} onChangeTodoTitle={onChangeTodoTitle} onEditTodo={onEditTodo} />;
+};
 
 export const Todo = Template.bind({});
 Todo.args = {
   todo: {
     id: 0,
-    title: "Номер 1",
+    title: 'Номер 1',
     isCheck: false,
   },
   index: Date.now(),
-  handlers: {}
 };

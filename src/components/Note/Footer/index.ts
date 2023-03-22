@@ -1,3 +1,3 @@
-import FooterNote from "./Footer";
+import FooterNote from './Footer';
 
 export default FooterNote;

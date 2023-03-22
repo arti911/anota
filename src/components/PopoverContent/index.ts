@@ -1,3 +1,1 @@
-import PopoverContent from "./PopoverContent";
-
-export default PopoverContent;
+export * from './PopoverContent';

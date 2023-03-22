@@ -1,17 +1,24 @@
-import { Button, Popover } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { EllipsisOutlined } from '@ant-design/icons';
+import { Button, Popover, PopoverProps } from 'antd';
 
-import PopoverContent from "../../PopoverContent";
+import { PopoverContent, PopoverContentProps } from 'components/PopoverContent';
 
-const PopoverAnota = (props: any) => (
-  <Popover
-    placement={props.placement}
-    trigger={props.trigger}
-    zIndex={props.zIndex}
-    content={<PopoverContent {...props.content} />}
-  >
-    <Button type="text" icon={<EllipsisOutlined />}></Button>
-  </Popover>
-);
+interface PopoverAnotaProps extends PopoverProps {
+  data: PopoverContentProps;
+}
+
+const PopoverAnota = (props: PopoverAnotaProps) => {
+  const { placement, trigger, zIndex, data } = props;
+  return (
+    <Popover
+      placement={placement}
+      trigger={trigger}
+      zIndex={zIndex}
+      content={<PopoverContent title={data.title} onClick={data.onClick} onConfirm={data.onConfirm} />}
+    >
+      <Button type="text" icon={<EllipsisOutlined />} />
+    </Popover>
+  );
+};
 
 export default PopoverAnota;
