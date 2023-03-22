@@ -70,6 +70,7 @@
     ]
   },
   "devDependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
