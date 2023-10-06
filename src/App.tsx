@@ -1,7 +1,5 @@
 import { Layout } from "antd";
 
-import "antd/dist/antd.less";
-
 import AddModal from "./components/Modal";
 import HeaderAnota from "./components/Header";
 import ContentAnota from "./components/Content";
