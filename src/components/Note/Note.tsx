@@ -53,19 +53,13 @@ const Note = (props: INote) => {
   const showModal = () => Object.values(openCurrentNote).map((fn) => dispatch(fn()));
   const confirmRemoveNote = () => dispatch(removeNote(props.id));
 
-  const contentForPopover = {
-    data: props,
-    clickHandler: showModal,
-    confirmHandler: confirmRemoveNote,
-  };
-
   return (
     <div className={rootClass} style={{ minHeight: `${height}px` }}>
       <div className="note__wrapper note__wrapper--front" ref={cardContentRef}>
         <List
           dataSource={props.todos}
           renderItem={(item) => (<ListItem title={item.title} isCheck={item.isCheck} key={item.id} />)}
-          header={<HeaderNote title={props.title} contentPopover={contentForPopover} />}
+          header={<HeaderNote title={props.title} onClick={showModal} onConfirm={confirmRemoveNote} />}
           footer={<FooterNote todos={props.todos} isVisibleNote={props.isVisibleNote} clickHandler={toggleShowNote} />}
         />
       </div>
