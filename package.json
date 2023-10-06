@@ -5,7 +5,6 @@
   "homepage": "https://arti911.github.io/anota",
   "dependencies": {
     "@ant-design/icons": "5.2.6",
-    "@craco/craco": "7.1.0",
     "@reduxjs/toolkit": "1.9.7",
     "@testing-library/jest-dom": "6.1.3",
     "@testing-library/react": "14.0.0",
@@ -16,9 +15,7 @@
     "array-move": "4.0.0",
     "babel-loader": "9.1.3",
     "classnames": "2.3.2",
-    "craco-less": "3.0.1",
     "gh-pages": "6.0.0",
-    "less-loader": "11.1.3",
     "lodash": "4.17.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -43,10 +40,10 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "generate": " npx generate-react-cli component",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
