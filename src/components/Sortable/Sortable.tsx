@@ -1,8 +1,17 @@
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import { ReactNode } from "react";
+import { SortableContainer, SortableContainerProps, SortableElement, SortableElementProps } from "react-sortable-hoc";
 
-const Wrapper = (props: any) => props.children;
+const Wrapper = ({ children }: { children: ReactNode }) => children;
 
-const SortableList = SortableContainer(Wrapper);
-const SortableItem = SortableElement(Wrapper);
+interface SortableListProps extends SortableContainerProps {
+  children: ReactNode;
+}
+
+interface SortableItemProps extends SortableElementProps {
+  children: ReactNode;
+}
+
+const SortableList = SortableContainer<SortableListProps>(Wrapper);
+const SortableItem = SortableElement<SortableItemProps>(Wrapper);
 
 export { SortableList, SortableItem };
