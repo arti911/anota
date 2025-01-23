@@ -1,20 +1,19 @@
 import { Layout } from "antd";
 
-import "antd/dist/antd.less";
-
-import AddModal from "./components/Modal";
-import HeaderAnota from "./components/Header";
-import ContentAnota from "./components/Content";
-import FooterAnota from "./components/Footer";
+// import AddModal from "./components/Modal";
+// import HeaderAnota from "./components/Header";
+// import ContentAnota from "./components/Content";
+// import FooterAnota from "./components/Footer";
 
 import "./style.scss";
 
 const App = () => (
   <Layout className="anota">
-    <HeaderAnota />
+    <h1>Hello, World..</h1>
+    {/* <HeaderAnota />
     <ContentAnota />
     <FooterAnota />
-    <AddModal />
+    <AddModal /> */}
   </Layout>
 );
 
