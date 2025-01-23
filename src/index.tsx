@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { get } from "lodash";
 
@@ -32,12 +31,11 @@ if (notes) {
 const rootElem = document.getElementById("root");
 
 if (rootElem !== null) {
-  const root = ReactDOM.createRoot(rootElem);
-
-  root.render(
+  render(
     <Provider store={store}>
       <App />
-    </Provider>
+    </Provider>,
+    rootElem
   );
 }
 
