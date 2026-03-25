@@ -1,4 +1,4 @@
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { get } from "lodash";
 
@@ -31,11 +31,10 @@ if (notes) {
 const rootElem = document.getElementById("root");
 
 if (rootElem !== null) {
-  render(
+  createRoot(rootElem).render(
     <Provider store={store}>
       <App />
     </Provider>,
-    rootElem
   );
 }
 
